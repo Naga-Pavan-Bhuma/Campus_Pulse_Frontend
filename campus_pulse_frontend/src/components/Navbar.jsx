@@ -4,7 +4,7 @@ const navbar = () => {
   return (
     <header className="bg-blue-600 text-white p-4 shadow-md flex justify-between items-center">
       {/* Left Side - Brand Name */}
-      <h1 className="text-2xl font-bold tracking-wide">CampuSphere</h1>
+      <h1 className="text-2xl font-bold tracking-wide">Campus Pulse</h1>
 
       {/* Right Side - Icons */}
       <div className="flex items-center gap-6">

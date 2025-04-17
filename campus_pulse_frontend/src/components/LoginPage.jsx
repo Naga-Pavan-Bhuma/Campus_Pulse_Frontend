@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { Mail, Lock, User, CheckCircle } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
 import axios from "axios";
-import LoginNavBar from "./LoginNavBar";
+import LoginNavbar from "./LoginNavbar";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import { useNavigate } from "react-router-dom";
 
-const API_URL = import.meta.env.VITE_BACKEND_URL;
+const API_URL = process.env.REACT_APP_BACKEND_URL;
+
 
 const LoginPage = () => {
   const [role, setRole] = useState("student");
@@ -57,7 +58,7 @@ const LoginPage = () => {
       className="relative min-h-screen bg-cover bg-center"
       style={{ backgroundImage: 'url("hero-bg.jpg")' }}
     >
-      <LoginNavBar />
+      <LoginNavbar />
       <div className="absolute inset-0 bg-black opacity-50"></div>
 
       <div className="min-h-screen flex flex-col lg:flex-row items-center justify-around relative z-20 p-4 gap-8">
