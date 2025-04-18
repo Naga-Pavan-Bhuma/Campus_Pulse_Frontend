@@ -1,107 +1,58 @@
-import React, { useState, useEffect } from "react";
-
-const departments = {
-  CSE: ["CSE-A", "CSE-B", "CSE-C", "CSE-D", "CSE-E"],
-  ECE: ["ECE-A", "ECE-B", "ECE-C", "ECE-D", "ECE-E"],
-  EEE: ["EEE-A", "EEE-B", "EEE-C", "EEE-D", "EEE-E"],
-  ME: ["ME-A", "ME-B", "ME-C", "ME-D", "ME-E"],
-  CE: ["CE-A", "CE-B", "CE-C", "CE-D", "CE-E"]
-};
-
-const sampleTimetable = {
-  "CSE-A": {
-    Monday: ["Math", "Physics", "English", "Break", "C++", "DSA"],
-    Tuesday: ["Math", "English", "Physics", "Break", "C++", "DSA"],
-    Wednesday: ["DSA", "Physics", "Math", "Break", "English", "C++"],
-    Thursday: ["Math", "C++", "DSA", "Break", "Physics", "English"],
-    Friday: ["English", "DSA", "Math", "Break", "Physics", "C++"],
-    Saturday: ["Lab", "Lab", "Lab", "Break", "Sports", "Library"]
-  },
-  // Add similar data for other classes...
-};
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import TimetableForm from './TimetableForm';
+import TimetableTable from './TimetableTable';
 
 const TimetableManager = () => {
-  const [selectedDept, setSelectedDept] = useState("CSE");
-  const [selectedClass, setSelectedClass] = useState("CSE-A");
+  const [selectedDept, setSelectedDept] = useState('CSE');
+  const [selectedClass, setSelectedClass] = useState('CSE-A');
+  const [timetable, setTimetable] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setSelectedClass(departments[selectedDept][0]);
-  }, [selectedDept]);
+    const fetchTimetable = async () => {
+      setLoading(true);
+      try {
+        const response = await axios.get(
+          `http://localhost:5000/timetable/${selectedDept}/${selectedClass}`
+        );
+        setTimetable(response.data);
+      } catch (err) {
+        console.error('Error fetching timetable:', err);
+      }
+      setLoading(false);
+    };
 
-  const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-  const timeSlots = ["9-10", "10-11", "11-12", "12-1", "2-3", "3-4"];
-
-  const timetable = sampleTimetable[selectedClass];
+    fetchTimetable();
+  }, [selectedDept, selectedClass]);
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
-      <div className="max-w-6xl mx-auto">
-        <h1 className="text-4xl font-bold text-center mb-8">📅 Timetable Manager</h1>
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-black p-6 text-white">
+      <div className="max-w-5xl mx-auto">
+        <h1 className="text-5xl font-extrabold mb-10 text-center bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500">
+          Timetable
+        </h1>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
-          <div>
-            <label className="block text-lg font-medium mb-2">Department</label>
-            <select
-              className="w-full p-3 rounded border border-gray-300"
-              value={selectedDept}
-              onChange={(e) => setSelectedDept(e.target.value)}
-            >
-              {Object.keys(departments).map((dept) => (
-                <option key={dept} value={dept}>
-                  {dept}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div>
-            <label className="block text-lg font-medium mb-2">Class</label>
-            <select
-              className="w-full p-3 rounded border border-gray-300"
-              value={selectedClass}
-              onChange={(e) => setSelectedClass(e.target.value)}
-            >
-              {departments[selectedDept].map((cls) => (
-                <option key={cls} value={cls}>
-                  {cls}
-                </option>
-              ))}
-            </select>
-          </div>
+        <div className="bg-white bg-opacity-10 p-6 rounded-2xl shadow-2xl backdrop-blur-md mb-6">
+          <TimetableForm
+            selectedDept={selectedDept}
+            selectedClass={selectedClass}
+            setSelectedDept={setSelectedDept}
+            setSelectedClass={setSelectedClass}
+          />
         </div>
 
-        <div className="overflow-x-auto">
-          <table className="w-full border-collapse bg-white shadow rounded-lg">
-            <thead>
-              <tr>
-                <th className="border border-gray-300 p-3 bg-gray-200 text-left">Day</th>
-                {timeSlots.map((slot, idx) => (
-                  <th key={idx} className="border border-gray-300 p-3 bg-gray-200 text-center">
-                    {slot}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {days.map((day) => (
-                <tr key={day}>
-                  <td className="border border-gray-300 p-3 font-semibold bg-gray-50">{day}</td>
-                  {timetable && timetable[day] ? (
-                    timetable[day].map((subject, idx) => (
-                      <td key={idx} className="border border-gray-300 p-3 text-center">
-                        {subject}
-                      </td>
-                    ))
-                  ) : (
-                    <td colSpan={timeSlots.length} className="p-3 text-center text-gray-500">
-                      No data
-                    </td>
-                  )}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        {loading ? (
+          <div className="flex justify-center mt-10">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-purple-500"></div>
+          </div>
+        ) : timetable ? (
+          <div className="bg-white bg-opacity-10 p-6 rounded-2xl shadow-xl backdrop-blur-md">
+            <TimetableTable timetable={timetable} />
+          </div>
+        ) : (
+          <p className="text-center mt-10 text-red-400">No timetable found.</p>
+        )}
       </div>
     </div>
   );
