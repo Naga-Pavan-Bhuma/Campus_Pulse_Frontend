@@ -6,6 +6,10 @@ import Home from './components/Home';
 import Body from './components/Body';
 import ExamSchedule from './components/ExamSchedule';
 import MainLayout from './components/MainLayout';
+import Clubs from './components/Clubs';
+import Career from './components/Career';
+import Foodmenu from './components/Foodmenu';
+import TimetableManager from './components/TimetableManager';
 
 const App = () => {
   return (
@@ -18,7 +22,12 @@ const App = () => {
           <Route path="examschedule" element={<ExamSchedule />} />
         </Route>
         <Route path="/student" element={<MainLayout />}>
+          <Route index element={<Career />} />
+          <Route path="clubs" element={<Clubs />} />
+          <Route path="career" element={<Career />} />
           <Route path="examschedule" element={<ExamSchedule />} />
+          <Route path="foodmenu" element={<Foodmenu />} />
+          <Route path="timetable" element={<TimetableManager />} />
         </Route>
       </Routes>
     </Router>

@@ -1,5 +1,6 @@
 import { Home, Users, MessageCircle, Briefcase, Calendar, LogOut } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { FaUtensils } from "react-icons/fa";
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -23,6 +24,9 @@ const Sidebar = () => {
         <NavItem to="clubs" icon={<Users size={22} />} label="Clubs" />
         <NavItem to="career" icon={<Briefcase size={22} />} label="Careers" />
         <NavItem to="examschedule" icon={<Calendar size={22} />} label="Exam Schedule" />
+        <NavItem to="foodmenu" icon={<FaUtensils size={22} />} label="Food Menu" />
+        <NavItem to="timetable" icon={<Calendar size={22} />} label="Timetable" />
+
       </nav>
 
       {/* Logout Button */}
