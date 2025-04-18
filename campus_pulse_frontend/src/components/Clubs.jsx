@@ -15,6 +15,7 @@ const Clubs = () => {
         const res = await axios.get(`${API_URL}/clubs`, {
           withCredentials: true,
         });
+        console.log(res.data);
         setClubs(res.data);
       } catch (err) {
         console.error("Error fetching clubs:", err);
@@ -66,7 +67,7 @@ const Clubs = () => {
       </h2>
 
       {clubs.length === 0 ? (
-        <p className="text-gray-500 text-center">Loading clubs...</p>
+        <p className="text-gray-500 text-center">No clubs available</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {clubs.map((club) => (

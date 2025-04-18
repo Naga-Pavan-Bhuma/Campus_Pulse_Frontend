@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Mail, Lock, User, Briefcase } from "lucide-react";
 import axios from "axios";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
-import Navbar from "./Navbar";
+import LoginNavbar from "./LoginNavbar";
 import { useNavigate } from "react-router-dom";
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
@@ -81,7 +81,7 @@ const SignupPage = () => {
 
   return (
     <div className="relative min-h-screen bg-cover bg-center" style={{ backgroundImage: 'url("hero-bg.jpg")' }}>
-      <Navbar />
+      <LoginNavbar />
       <div className="absolute inset-0 bg-black opacity-50"></div>
 
       <div className="min-h-screen flex flex-col lg:flex-row items-center justify-around relative z-20 p-4 gap-8">

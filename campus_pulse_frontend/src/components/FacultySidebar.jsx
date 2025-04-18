@@ -2,7 +2,7 @@ import { Home, Users, MessageCircle, Briefcase, Calendar, LogOut } from "lucide-
 import { NavLink, useNavigate } from "react-router-dom";
 import { FaUtensils } from "react-icons/fa";
 
-const Sidebar = () => {
+const StudentSidebar = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -19,10 +19,7 @@ const Sidebar = () => {
 
       {/* Navigation Links */}
       <nav className="flex flex-col gap-4">
-        <NavItem to="/student" icon={<Home size={22} />} label="Home" />
-        <NavItem to="discussions" icon={<MessageCircle size={22} />} label="Discussions" />
-        <NavItem to="clubs" icon={<Users size={22} />} label="Clubs" />
-        <NavItem to="career" icon={<Briefcase size={22} />} label="Careers" />
+        <NavItem to="/faculty" icon={<Home size={22} />} label="Home" />
         <NavItem to="examschedule" icon={<Calendar size={22} />} label="Exam Schedule" />
         <NavItem to="foodmenu" icon={<FaUtensils size={22} />} label="Food Menu" />
         <NavItem to="timetable" icon={<Calendar size={22} />} label="Timetable" />
@@ -60,4 +57,4 @@ const NavItem = ({ to, icon, label }) => {
   );
 };
 
-export default Sidebar;
+export default StudentSidebar;
