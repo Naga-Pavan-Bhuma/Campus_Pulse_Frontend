@@ -2,7 +2,7 @@ import { Home, Users, MessageCircle, Briefcase, Calendar, LogOut } from "lucide-
 import { NavLink, useNavigate } from "react-router-dom";
 import { FaUtensils } from "react-icons/fa";
 
-const StudentSidebar = () => {
+const FacultySidebar = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -22,8 +22,8 @@ const StudentSidebar = () => {
         <NavItem to="/faculty" icon={<Home size={22} />} label="Home" />
         <NavItem to="examschedule" icon={<Calendar size={22} />} label="Exam Schedule" />
         <NavItem to="foodmenu" icon={<FaUtensils size={22} />} label="Food Menu" />
-        <NavItem to="timetable" icon={<Calendar size={22} />} label="Timetable" />
-
+        {/* New Edit Timetable option */}
+        <NavItem to="edit-timetable" icon={<Calendar size={22} />} label="Edit Timetable" />
       </nav>
 
       {/* Logout Button */}
@@ -57,4 +57,4 @@ const NavItem = ({ to, icon, label }) => {
   );
 };
 
-export default StudentSidebar;
+export default FacultySidebar;
