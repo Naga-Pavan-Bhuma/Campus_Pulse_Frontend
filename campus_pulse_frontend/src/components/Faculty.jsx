@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
   FaChalkboardTeacher,
@@ -18,10 +19,11 @@ const facultyOptions = [
     bg: "from-yellow-500 to-yellow-600"
   },
   {
-    title: "Upload Timetable",
+    title: "Edit Timetable",
     icon: FaClock,
-    description: "Add and manage class schedules for your department.",
-    bg: "from-blue-500 to-blue-600"
+    description: "Manage class schedules for your department.",
+    bg: "from-blue-500 to-blue-600",
+    link: "/faculty/edit-timetable"
   },
   {
     title: "Schedule Meetings",
@@ -44,11 +46,14 @@ const facultyOptions = [
 ];
 
 const Faculty = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false); // ✅ State
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
 
-  const handleCardClick = (title) => {
+  const handleCardClick = (title, link) => {
     if (title === "Post Announcement") {
       setIsModalOpen(true);
+    } else if (link) {
+      navigate(link);
     }
   };
 
@@ -89,7 +94,7 @@ const Faculty = () => {
                   </div>
                 </div>
                 <button
-                  onClick={() => handleCardClick(option.title)}
+                  onClick={() => handleCardClick(option.title, option.link)}
                   className="mt-6 w-full bg-white/20 text-white py-2 rounded-lg hover:bg-white/30 transition-all duration-300 font-medium"
                 >
                   Go to {option.title}
@@ -112,7 +117,7 @@ const Faculty = () => {
         </div>
       </motion.div>
 
-      {/* ✅ Add Modal */}
+      {/* ✅ Modal Component */}
       <PostAnnouncementModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
   );
