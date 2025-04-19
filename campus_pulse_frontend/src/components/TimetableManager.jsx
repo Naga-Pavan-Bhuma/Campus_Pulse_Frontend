@@ -6,6 +6,7 @@ import TimetableTable from './TimetableTable';
 const TimetableManager = () => {
   const [selectedDept, setSelectedDept] = useState('CSE');
   const [selectedClass, setSelectedClass] = useState('CSE-A');
+  const [selectedYear, setSelectedYear] = useState('1st Year'); // Added year state
   const [timetable, setTimetable] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -14,7 +15,7 @@ const TimetableManager = () => {
       setLoading(true);
       try {
         const response = await axios.get(
-          `http://localhost:5000/timetable/${selectedDept}/${selectedClass}`
+          `http://localhost:5000/timetable/${selectedDept}/${selectedClass}/${selectedYear}` // Include year in API request
         );
         setTimetable(response.data);
       } catch (err) {
@@ -24,7 +25,7 @@ const TimetableManager = () => {
     };
 
     fetchTimetable();
-  }, [selectedDept, selectedClass]);
+  }, [selectedDept, selectedClass, selectedYear]); // Added year to the dependency array
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-black p-6 text-white">
@@ -37,8 +38,10 @@ const TimetableManager = () => {
           <TimetableForm
             selectedDept={selectedDept}
             selectedClass={selectedClass}
+            selectedYear={selectedYear} // Pass selectedYear to TimetableForm
             setSelectedDept={setSelectedDept}
             setSelectedClass={setSelectedClass}
+            setSelectedYear={setSelectedYear} // Pass setSelectedYear to TimetableForm
           />
         </div>
 

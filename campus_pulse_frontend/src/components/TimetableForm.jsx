@@ -1,11 +1,12 @@
 import React from 'react';
 
 const departments = ['CSE', 'ECE', 'EEE', 'ME', 'CE'];
+const years = ['1st Year', '2nd Year', '3rd Year', '4th Year'];
 
-const TimetableForm = ({ selectedDept, selectedClass, setSelectedDept, setSelectedClass }) => {
+const TimetableForm = ({ selectedDept, selectedClass, selectedYear, setSelectedDept, setSelectedClass, setSelectedYear }) => {
   return (
     <div className="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-lg">
-      <h2 className="text-2xl font-semibold text-center text-purple-600 mb-6">Select Department & Class</h2>
+      <h2 className="text-2xl font-semibold text-center text-purple-600 mb-6">Select Department, Year & Class</h2>
 
       <form className="space-y-6">
         {/* Department Selection */}
@@ -20,6 +21,23 @@ const TimetableForm = ({ selectedDept, selectedClass, setSelectedDept, setSelect
             {departments.map((dept) => (
               <option key={dept} value={dept}>
                 {dept}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {/* Year Selection */}
+        <div>
+          <label htmlFor="year" className="block text-sm font-semibold text-gray-700">Year</label>
+          <select
+            id="year"
+            value={selectedYear}
+            onChange={(e) => setSelectedYear(e.target.value)}
+            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+          >
+            {years.map((year) => (
+              <option key={year} value={year}>
+                {year}
               </option>
             ))}
           </select>
