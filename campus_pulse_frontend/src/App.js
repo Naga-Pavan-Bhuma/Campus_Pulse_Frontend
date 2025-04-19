@@ -1,11 +1,6 @@
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useLocation,
-} from "react-router-dom";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import AnnouncementPopup from "./components/AnnouncemetPopup";
 import LoginPage from "./components/LoginPage";
 import SignupPage from "./components/SignupPage";
@@ -24,7 +19,7 @@ const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 const App = () => {
   return (
-    <Router>
+    <Router> {/* Router wrapping entire app */}
       <AnnouncementRoutes />
     </Router>
   );
@@ -37,20 +32,14 @@ const AnnouncementRoutes = () => {
 
   useEffect(() => {
     const fetchAnnouncements = async () => {
-      if (
-        location.pathname.startsWith("/student") ||
-        location.pathname.startsWith("/faculty") ||
-        location.pathname.startsWith("/admin")
-      ) {
-        try {
-          const res = await axios.get(`${API_URL}/annoucements`);
-          setAnnouncements(res.data);
-          if (res.data.length > 0) {
-            setShowPopup(true);
-          }
-        } catch (error) {
-          console.error("Error fetching announcements:", error);
+      try {
+        const res = await axios.get(`${API_URL}/announcements`);
+        setAnnouncements(res.data);
+        if (res.data.length > 0) {
+          setShowPopup(true);
         }
+      } catch (error) {
+        console.error("Error fetching announcements:", error);
       }
     };
 

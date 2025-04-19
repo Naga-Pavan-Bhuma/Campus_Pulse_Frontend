@@ -1,33 +1,39 @@
-import { Bell, MessageCircle, User } from "lucide-react";
+import { Bell } from "lucide-react";
 
-const navbar = () => {
+const Navbar = ({ userName = "John Doe", announcementCount = 0, onNotificationClick }) => {
   return (
-    <header className="bg-blue-600 text-white p-4 shadow-md flex justify-between items-center">
-      {/* Left Side - Brand Name */}
-      <h1 className="text-2xl font-bold tracking-wide">Campus Pulse</h1>
+    <header className="bg-white shadow-md p-4 flex items-center justify-between px-6">
+      {/* Logo/Brand */}
+      <div className="text-xl font-semibold text-blue-700 tracking-wide">
+        Campus Pulse
+      </div>
 
-      {/* Right Side - Icons */}
+      {/* Right Side */}
       <div className="flex items-center gap-6">
+        <div className="text-gray-700 font-medium hidden sm:block">
+          Welcome, <span className="text-blue-600 font-semibold">{userName}</span>
+        </div>
+
         {/* Notification Icon */}
-        <button className="relative p-2 hover:bg-blue-500 rounded-lg">
-          <Bell size={24} />
-          <span className="absolute -top-1 -right-1 bg-red-500 text-xs text-white w-4 h-4 flex items-center justify-center rounded-full">
-            3
-          </span>
+        <button
+          className="relative hover:bg-gray-100 p-2 rounded-lg transition"
+          onClick={onNotificationClick}
+        >
+          <Bell size={24} className="text-gray-700" />
+          {announcementCount > 0 && (
+            <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+              {announcementCount}
+            </span>
+          )}
         </button>
 
-        {/* Live Chat Icon */}
-        <button className="p-2 hover:bg-blue-500 rounded-lg">
-          <MessageCircle size={24} />
-        </button>
-
-        {/* Profile Icon */}
-        <button className="p-2 hover:bg-blue-500 rounded-lg">
-          <User size={24} />
-        </button>
+        {/* Profile Circle */}
+        <div className="w-9 h-9 bg-blue-600 text-white flex items-center justify-center rounded-full font-semibold">
+          {userName?.[0]?.toUpperCase() || "U"}
+        </div>
       </div>
     </header>
   );
 };
 
-export default navbar;
+export default Navbar;
