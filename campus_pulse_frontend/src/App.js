@@ -14,8 +14,6 @@ import StudentDashboard from "./components/StudentDashboard";
 import Foodmenu from "./components/Foodmenu";
 import TimetableManager from "./components/TimetableManager";
 import EventPage from "./components/EventsSection";
-import EditTimetablePage from "./components/TimetableEditor"; // Import the new page
-import TimetableEditor from "./components/TimetableEditor";
 
 const App = () => {
   return (
@@ -27,6 +25,7 @@ const App = () => {
           <Route path="login" element={<LoginPage />} />
           <Route path="signup" element={<SignupPage />} />
           <Route path="examschedule" element={<ExamSchedule />} />
+          <Route path="calendar" element={<AcademicCalendar />} />
         </Route>
 
         {/* Student Routes */}
