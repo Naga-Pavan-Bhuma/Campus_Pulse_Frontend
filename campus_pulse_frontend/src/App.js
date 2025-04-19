@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
-import AnnouncementPopup from "./components/AnnouncemetPopup";
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LoginPage from "./components/LoginPage";
 import SignupPage from "./components/SignupPage";
 import Body from "./components/Body";
@@ -13,42 +11,17 @@ import Faculty from "./components/Faculty";
 import Admin from "./components/Admin";
 import ExamSchedule from "./components/ExamSchedule";
 import StudentDashboard from "./components/StudentDashboard";
+import Foodmenu from "./components/Foodmenu";
+import TimetableManager from "./components/TimetableManager";
 import EventPage from "./components/EventsSection";
 import AcademicCalendar from "./components/AcademicCalendar";
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 const App = () => {
   return (
-    <Router> {/* Router wrapping entire app */}
-      <AnnouncementRoutes />
-    </Router>
-  );
-};
-
-const AnnouncementRoutes = () => {
-  const location = useLocation();
-  const [announcements, setAnnouncements] = useState([]);
-  const [showPopup, setShowPopup] = useState(false);
-
-  useEffect(() => {
-    const fetchAnnouncements = async () => {
-      try {
-        const res = await axios.get(`${API_URL}/announcements`);
-        setAnnouncements(res.data);
-        if (res.data.length > 0) {
-          setShowPopup(true);
-        }
-      } catch (error) {
-        console.error("Error fetching announcements:", error);
-      }
-    };
-
-    fetchAnnouncements();
-  }, [location]);
-
-  return (
-    <>
+    <Router>
       <Routes>
+        {/* Public Routes */}
         <Route path="/" element={<Body />}>
           <Route index element={<Home />} />
           <Route path="login" element={<LoginPage />} />
@@ -57,21 +30,27 @@ const AnnouncementRoutes = () => {
           <Route path="calendar" element={<AcademicCalendar />} />
         </Route>
 
+        {/* Student Routes */}
         <Route path="/student" element={<MainLayout />}>
           <Route index element={<StudentDashboard />} />
           <Route path="clubs" element={<Clubs />} />
           <Route path="career" element={<Career />} />
           <Route path="examschedule" element={<ExamSchedule />} />
-          <Route path="events" element={<EventPage />} />
+          <Route path="foodmenu" element={<Foodmenu />} />
+          <Route path="timetable" element={<TimetableManager />} />
         </Route>
 
+        {/* Faculty Routes */}
         <Route path="/faculty" element={<MainLayout />}>
           <Route index element={<Faculty />} />
           <Route path="clubs" element={<Clubs />} />
           <Route path="career" element={<Career />} />
           <Route path="examschedule" element={<ExamSchedule />} />
+          <Route path="foodmenu" element={<Foodmenu />} />
+          <Route path="timetable" element={<TimetableManager />} />
         </Route>
 
+        {/* Admin Routes */}
         <Route path="/admin" element={<MainLayout />}>
           <Route index element={<Admin />} />
           <Route path="clubs" element={<Clubs />} />
@@ -79,14 +58,7 @@ const AnnouncementRoutes = () => {
           <Route path="examschedule" element={<ExamSchedule />} />
         </Route>
       </Routes>
-
-      {showPopup && (
-        <AnnouncementPopup
-          announcements={announcements}
-          onClose={() => setShowPopup(false)}
-        />
-      )}
-    </>
+    </Router>
   );
 };
 

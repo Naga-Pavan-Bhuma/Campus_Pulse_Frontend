@@ -1,16 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import {
-  FaUserFriends,
-  FaLaptopCode,
-  FaCalendarAlt,
-  FaUtensils,
-  FaClock,
-} from "react-icons/fa";
+import { FaUserFriends, FaLaptopCode, FaCalendarAlt, FaUtensils, FaClock } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import axios from "axios"; // axios for HTTP requests
-import Navbar from "../components/Navbar";
-import AnnouncementPopup from "./AnnouncemetPopup";
+import axios from "axios";
+import AnnouncementPopup from "./AnnouncemetPopup";  // Ensure the import path is correct
 
 const navOptions = [
   {
@@ -55,12 +48,18 @@ const StudentDashboard = () => {
   const [announcements, setAnnouncements] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // ✅ Fetch announcements from backend
   useEffect(() => {
     const fetchAnnouncements = async () => {
       try {
         const response = await axios.get("http://localhost:5000/announcements");
         setAnnouncements(response.data);
+
+        // Check if the popup has been shown already using sessionStorage
+        const seen = sessionStorage.getItem("announcementSeen");
+        if (!seen) {
+          setShowPopup(true); // Show popup if not already seen
+          sessionStorage.setItem("announcementSeen", "true"); // Mark as seen
+        }
       } catch (error) {
         console.error("Error fetching announcements:", error);
       } finally {
@@ -73,8 +72,6 @@ const StudentDashboard = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 text-white">
-      {/* Navbar with announcement count */}
-      
       <div className="flex flex-col items-center px-6 py-12">
         <motion.h1
           initial={{ opacity: 0, y: -30 }}
@@ -93,7 +90,6 @@ const StudentDashboard = () => {
           Navigate your student life with ease. Stay informed, engaged, and connected.
         </motion.p>
 
-        {/* Loading Indicator */}
         {loading ? (
           <p className="text-white text-lg mt-8">Loading...</p>
         ) : (
@@ -131,6 +127,14 @@ const StudentDashboard = () => {
           © {new Date().getFullYear()} Campus Pulse · Empowering Campus Life ✨
         </motion.div>
       </div>
+
+      {/* Announcement Popup shown only once */}
+      {showPopup && (
+        <AnnouncementPopup
+          announcements={announcements}
+          onClose={() => setShowPopup(false)}
+        />
+      )}
     </div>
   );
 };

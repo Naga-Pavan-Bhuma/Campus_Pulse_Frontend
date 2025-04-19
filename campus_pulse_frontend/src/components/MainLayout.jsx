@@ -7,28 +7,13 @@ import axios from "axios";
 import AnnouncementPopup from "./AnnouncemetPopup";
 
 const MainLayout = () => {
-  // State hooks
-  const [showPopup, setShowPopup] = useState(false);
-  const [announcements, setAnnouncements] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [showPopup, setShowPopup] = useState(false); // State to control popup visibility
   const [userName, setUserName] = useState("");
+  const [announcementCount, setAnnouncementCount] = useState(0); // Store announcement count
   const location = useLocation();
-  // ✅ Fetch announcements from backend
-  useEffect(() => {
-    const fetchAnnouncements = async () => {
-      try {
-        const response = await axios.get("http://localhost:5000/announcements");
-        setAnnouncements(response.data);
-      } catch (error) {
-        console.error("Error fetching announcements:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
 
-    fetchAnnouncements();
-  }, []);
   useEffect(() => {
+    // Fetch user details
     const fetchUserDetails = async () => {
       try {
         const res = await axios.get("http://localhost:5000/user", {
@@ -39,45 +24,57 @@ const MainLayout = () => {
         console.error("Error fetching user details:", err);
       }
     };
-  
+
+    // Fetch announcement count
+    const fetchAnnouncementCount = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/announcements");
+        setAnnouncementCount(res.data.length); // Assuming response contains array of announcements
+      } catch (err) {
+        console.error("Error fetching announcements:", err);
+      }
+    };
+
     fetchUserDetails();
+    fetchAnnouncementCount();
   }, [location.pathname]);
 
+  // Function to show the popup
+  const handleNotificationClick = () => {
+    setShowPopup(true); // Show the popup when the notification icon is clicked
+  };
+
+  // Render sidebar based on path
   const renderSidebar = () => {
     if (location.pathname.startsWith("/faculty")) {
       return <FacultySidebar />;
     } else if (location.pathname.startsWith("/student")) {
       return <StudentSidebar />;
     }
-    return null; // Optional fallback for login or public pages
+    return null;
   };
 
   return (
     <div className="flex h-screen">
-      {/* Sidebar based on current route */}
       {renderSidebar()}
-
       <div className="flex flex-col flex-grow">
-        {/* Navbar */}
         <Navbar
-          userName={userName} // Pass the full name to Navbar
-          announcementCount={announcements.length}
-          onNotificationClick={() => setShowPopup(true)}
+          userName={userName}
+          announcementCount={announcementCount}
+          onNotificationClick={handleNotificationClick} // Pass the function to Navbar
         />
-
-        {/* Announcement Popup */}
-        {showPopup && (
-          <AnnouncementPopup
-            announcements={announcements}
-            onClose={() => setShowPopup(false)}
-          />
-        )}
-
-        {/* Dynamic Content */}
         <div className="p-6 bg-gray-100 h-full overflow-auto">
           <Outlet />
         </div>
       </div>
+
+      {/* Display popup when showPopup is true */}
+      {showPopup && (
+        <AnnouncementPopup
+          announcements={[]} // You can pass actual announcements here
+          onClose={() => setShowPopup(false)} // Close popup when close button is clicked
+        />
+      )}
     </div>
   );
 };
