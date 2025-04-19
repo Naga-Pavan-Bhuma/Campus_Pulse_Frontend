@@ -27,7 +27,6 @@ const App = () => {
           <Route path="login" element={<LoginPage />} />
           <Route path="signup" element={<SignupPage />} />
           <Route path="examschedule" element={<ExamSchedule />} />
-          <Route path="calendar" element={<AcademicCalendar />} />
         </Route>
 
         {/* Student Routes */}
@@ -38,6 +37,7 @@ const App = () => {
           <Route path="examschedule" element={<ExamSchedule />} />
           <Route path="foodmenu" element={<Foodmenu />} />
           <Route path="timetable" element={<TimetableManager />} />
+          <Route path="/student/calendar" element={<AcademicCalendar />} />
         </Route>
 
         {/* Faculty Routes */}
@@ -48,6 +48,7 @@ const App = () => {
           <Route path="examschedule" element={<ExamSchedule />} />
           <Route path="foodmenu" element={<Foodmenu />} />
           <Route path="timetable" element={<TimetableManager />} />
+          <Route path="calendar" element={<AcademicCalendar />} />
         </Route>
 
         {/* Admin Routes */}

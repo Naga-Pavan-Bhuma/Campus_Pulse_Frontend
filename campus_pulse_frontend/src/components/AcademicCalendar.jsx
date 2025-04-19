@@ -57,31 +57,56 @@ const AcademicCalendar = () => {
     const monthEnd = endOfMonth(monthStart);
     const startDate = startOfWeek(monthStart);
     const rows = [];
-
+  
     let day = startDate;
+  
     while (day <= monthEnd) {
       const days = [];
+  
       for (let i = 0; i < 7; i++) {
         const formatted = format(day, 'yyyy-MM-dd');
         const dayEvents = events.filter(e => format(new Date(e.date), 'yyyy-MM-dd') === formatted);
-
+        const isSunday = day.getDay() === 0;
+  
         days.push(
-          <div key={day} className="p-4 border border-gray-700 min-h-[80px] relative hover:bg-opacity-20 transition-all duration-300">
+          <div key={day} className="p-2 sm:p-4 border border-gray-700 min-h-[90px] relative hover:bg-opacity-20 transition-all duration-300 group">
             <span className="text-sm font-semibold text-white">{format(day, 'd')}</span>
-            {dayEvents.map((event, idx) => (
-              <div key={idx} className={`text-xs mt-1 px-2 py-1 rounded shadow-md ${event.type === 'exam' ? 'bg-red-500 text-white' : 'bg-green-500 text-white'}`}>
-                {event.title.length > 10 ? event.title.slice(0, 10) + '…' : event.title}
+  
+            {/* Sunday Holiday Badge */}
+            {isSunday && (
+              <div className="text-xs mt-1 px-2 py-1 rounded bg-blue-500 text-white w-fit shadow-sm">
+                Holiday
               </div>
-            ))}
+            )}
+  
+            {/* Event Pills with Tooltip */}
+            {/* Sunday Holiday */}
+
+
+{dayEvents.map((event, idx) => (
+  <div key={idx} className="relative group text-xs mt-1 w-full max-w-full">
+    <div className={`px-2 py-1 rounded shadow-md truncate ${event.type === 'exam' ? 'bg-red-500 text-white' : 'bg-green-500 text-white'}`}>
+      {event.title.length > 10 ? event.title.slice(0, 10) + '…' : event.title}
+    </div>
+    {/* Tooltip on hover */}
+    <div className="absolute z-20 bottom-full mb-1 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-80 text-white text-xs p-2 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 w-max max-w-xs text-center pointer-events-none">
+      {event.title}
+    </div>
+  </div>
+))}
+
           </div>
         );
+  
         day = addDays(day, 1);
       }
+  
       rows.push(<div key={day} className="grid grid-cols-7 gap-px">{days}</div>);
     }
-
+  
     return <div>{rows}</div>;
   };
+  
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-black p-8 text-white">
@@ -96,9 +121,15 @@ const AcademicCalendar = () => {
             <div className="w-full sm:w-48">
               <label className="block text-sm font-semibold text-gray-300 mb-1">Branch</label>
               <select value={branch} onChange={(e) => setBranch(e.target.value)} className="w-full p-3 rounded-lg text-black">
-                <option value="CSE">CSE</option>
-                <option value="ECE">ECE</option>
-              </select>
+  <option value="CSE">CSE</option>
+  <option value="ECE">ECE</option>
+  <option value="EEE">EEE</option>
+  <option value="MECH">MECH</option>
+  <option value="CIVIL">CIVIL</option>
+  <option value="CHEM">CHEM</option>
+  <option value="MME">MME</option>
+</select>
+
             </div>
             <div className="w-full sm:w-48">
               <label className="block text-sm font-semibold text-gray-300 mb-1">Year</label>
