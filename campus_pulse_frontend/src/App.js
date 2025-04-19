@@ -14,7 +14,7 @@ import Admin from "./components/Admin";
 import ExamSchedule from "./components/ExamSchedule";
 import StudentDashboard from "./components/StudentDashboard";
 import EventPage from "./components/EventsSection";
-
+import AcademicCalendar from "./components/AcademicCalendar";
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 const App = () => {
@@ -54,6 +54,7 @@ const AnnouncementRoutes = () => {
           <Route path="login" element={<LoginPage />} />
           <Route path="signup" element={<SignupPage />} />
           <Route path="examschedule" element={<ExamSchedule />} />
+          <Route path="calendar" element={<AcademicCalendar />} />
         </Route>
 
         <Route path="/student" element={<MainLayout />}>
