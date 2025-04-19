@@ -14,6 +14,10 @@ import StudentDashboard from "./components/StudentDashboard";
 import Foodmenu from "./components/Foodmenu";
 import TimetableManager from "./components/TimetableManager";
 import EventPage from "./components/EventsSection";
+import EditTimetablePage from "./components/TimetableEditor"; // Import the new page
+import TimetableEditor from "./components/TimetableEditor";
+import AcademicCalendar from "./components/AcademicCalendar";
+const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 const App = () => {
   return (
