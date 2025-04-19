@@ -14,6 +14,10 @@ import StudentDashboard from "./components/StudentDashboard";
 import Foodmenu from "./components/Foodmenu";
 import TimetableManager from "./components/TimetableManager";
 import EventPage from "./components/EventsSection";
+import EditTimetablePage from "./components/TimetableEditor"; // Import the new page
+import TimetableEditor from "./components/TimetableEditor";
+import AcademicCalendar from "./components/AcademicCalendar";
+const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 const App = () => {
   return (
@@ -35,6 +39,7 @@ const App = () => {
           <Route path="examschedule" element={<ExamSchedule />} />
           <Route path="foodmenu" element={<Foodmenu />} />
           <Route path="timetable" element={<TimetableManager />} />
+          <Route path="/student/calendar" element={<AcademicCalendar />} />
         </Route>
 
         {/* Faculty Routes */}
@@ -44,7 +49,9 @@ const App = () => {
           <Route path="career" element={<Career />} />
           <Route path="examschedule" element={<ExamSchedule />} />
           <Route path="foodmenu" element={<Foodmenu />} />
-          <Route path="timetable" element={<TimetableManager />} />
+          {/* Add the new route for Edit Timetable */}
+          <Route path="edit-timetable" element={<TimetableEditor />} />
+          <Route path="calendar" element={<AcademicCalendar />} />
         </Route>
 
         {/* Admin Routes */}

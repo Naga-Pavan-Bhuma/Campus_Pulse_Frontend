@@ -25,7 +25,7 @@ const StudentSidebar = () => {
         <NavItem to="examschedule" icon={<Calendar size={22} />} label="Exam Schedule" />
         <NavItem to="foodmenu" icon={<FaUtensils size={22} />} label="Food Menu" />
         <NavItem to="timetable" icon={<Calendar size={22} />} label="Timetable" />
-
+        <NavItem to="calendar" icon={<Calendar size={22} />} label="Academic Calendar" />
       </nav>
 
       {/* Logout Button */}
