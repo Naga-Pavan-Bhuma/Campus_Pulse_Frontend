@@ -3,7 +3,7 @@ import { FaUsers, FaClipboardList, FaCogs, FaCalendarAlt, FaBell, FaSignOutAlt }
 
 const sidebarItems = [
   { icon: <FaUsers />, label: "Faculty Management" },
-  { icon: <FaClipboardList />, label: "Mess Menu Management" },
+  { icon: <FaClipboardList />, label: "Menu Management" },
   { icon: <FaCogs />, label: "Settings" },
   { icon: <FaCalendarAlt />, label: "Timetable & Attendance" },
   { icon: <FaBell />, label: "Notifications" },

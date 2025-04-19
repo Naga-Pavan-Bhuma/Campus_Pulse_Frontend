@@ -23,7 +23,7 @@ const Admin = () => {
           </>
         )}
 
-        {selectedSection === "Mess Menu" && <MessMenuManager />}
+        {selectedSection === "Menu Management" && <MessMenuManager />}
       </div>
     </div>
   );
