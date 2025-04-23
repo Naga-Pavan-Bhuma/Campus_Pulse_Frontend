@@ -4,8 +4,8 @@ import { FaUsers, FaClipboardList, FaCogs, FaCalendarAlt, FaBell, FaSignOutAlt }
 const sidebarItems = [
   { icon: <FaUsers />, label: "Faculty Management" },
   { icon: <FaClipboardList />, label: "Menu Management" },
-  { icon: <FaCogs />, label: "Settings" },
-  { icon: <FaCalendarAlt />, label: "Timetable & Attendance" },
+  { icon: <FaCogs />, label: "Update Events" },
+  { icon: <FaCalendarAlt />, label: "Edit Exam Schedule" },
   { icon: <FaBell />, label: "Notifications" },
   { icon: <FaSignOutAlt />, label: "Logout" },
 ];

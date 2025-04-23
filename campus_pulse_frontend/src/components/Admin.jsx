@@ -4,6 +4,8 @@ import StatsCards from "./StatsCards";
 import UserManagement from "./FacultyManagement";
 import AddUserForm from "./AddFacultyForm";
 import MessMenuManager from "./MessMenuManager";
+import AdminExamSchedule from "./AdminExamSchedule";
+import AdminEventForm from "./AdminEventForm";
 
 const Admin = () => {
   const [selectedSection, setSelectedSection] = useState("User Management");
@@ -22,7 +24,18 @@ const Admin = () => {
             <AddUserForm />
           </>
         )}
-
+         {selectedSection === "Faculty Management" && (
+          <>
+            <UserManagement />
+            <AddUserForm />
+          </>
+        )}
+        {selectedSection === "Update Events" && (
+          <AdminEventForm />
+        )}
+        {selectedSection === "Edit Exam Schedule" && (
+          <AdminExamSchedule />
+        )}
         {selectedSection === "Menu Management" && <MessMenuManager />}
       </div>
     </div>

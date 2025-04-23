@@ -10,7 +10,7 @@ export default function EventsSection() {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await fetch("http://localhost:5000/schedule"); // Make sure this matches your backend route
+        const response = await fetch("http://localhost:5000/events"); // Make sure this matches your backend route
         const data = await response.json();
         setEvents(data);
         console.log("Fetched events:", data); // Debugging line to check fetched data
@@ -51,7 +51,7 @@ export default function EventsSection() {
                 >
                   <div className="flex flex-col justify-center text-left">
                     <div className="text-lg font-semibold text-gray-900">{event.title}</div>
-                    <div className={`text-sm ${open === index ? "text-gray-700" : "text-transparent"}`}>
+                    <div className={`text-sm ${open === index ? "text-gray-700" : "text-gray-900"}`}>
                       {event.date}
                     </div>
                   </div>
