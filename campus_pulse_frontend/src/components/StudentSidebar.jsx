@@ -21,7 +21,7 @@ const StudentSidebar = () => {
     <aside className="w-64 h-screen bg-gray-100 border-r border-gray-300 p-5 flex flex-col justify-between shadow-md">
       {/* Logo Section */}
       <div className="mb-8">
-        <h2 className="text-2xl font-bold text-gray-800 tracking-wide">CampuSphere</h2>
+        <h2 className="text-2xl font-bold text-gray-800 tracking-wide">Campus Pulse</h2>
       </div>
 
       {/* Navigation Links */}

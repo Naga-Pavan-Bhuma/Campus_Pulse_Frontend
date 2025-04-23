@@ -39,7 +39,31 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
-    <script> window.chtlConfig = { chatbotId: "8623277843" } </script>
-    <script async data-id="8623277843" id="chatling-embed-script" type="text/javascript" src="https://chatling.ai/js/embed.js"></script>
+    <script src='https://cdn.jotfor.ms/s/umd/latest/for-embedded-agent.js'></script>
+    <script>
+      window.addEventListener("DOMContentLoaded", function() {
+        window.AgentInitializer.init({
+          agentRenderURL: "https://agent.jotform.com/019540dfdb7c772b8bc08b0a4b6021cab310",
+          rootId: "JotformAgent-019540dfdb7c772b8bc08b0a4b6021cab310",
+          formID: "019540dfdb7c772b8bc08b0a4b6021cab310",
+          queryParams: ["skipWelcome=1", "maximizable=1"],
+          domain: "https://www.jotform.com",
+          isDraggable: false,
+          background: "linear-gradient(180deg, #0a92ff 0%, #0F53B4 100%)",
+          buttonBackgroundColor: "#4093f6",
+          buttonIconColor: "#ffffff",
+          variant: false,
+          customizations: {
+            "greeting": "Yes",
+            "greetingMessage": "Hi! How can I assist you?",
+            "openByDefault": "No",
+            "pulse": "Yes",
+            "position": "right",
+            "autoOpenChatIn": "0"
+          },
+          isVoice: undefined
+        });
+      });
+    </script>
   </body>
 </html>
