@@ -2,161 +2,37 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "./Card";
 import { Select, SelectItem } from "./Select";
-import { gapi } from "gapi-script";
-const examData = {
-  CSE: {
-    "1st Year": {
-      "Mid-1": [
-        { subject: "Mathematics", date: "2025-03-10" },
-        { subject: "Physics", date: "2025-03-12" },
-        { subject: "Programming", date: "2025-03-14" },
-      ],
-      "Mid-2": [
-        { subject: "Mathematics", date: "2025-04-10" },
-        { subject: "Physics", date: "2025-04-12" },
-        { subject: "Programming", date: "2025-04-14" },
-      ],
-      "Mid-3": [
-        { subject: "Mathematics", date: "2025-05-10" },
-        { subject: "Physics", date: "2025-05-12" },
-        { subject: "Programming", date: "2025-05-14" },
-      ],
-      Semester: [
-        { subject: "Mathematics", date: "2025-06-10" },
-        { subject: "Physics", date: "2025-06-12" },
-        { subject: "Programming", date: "2025-06-14" },
-      ],
-    },
-    "2nd Year": {
-      "Mid-1": [
-        { subject: "Data Structures", date: "2025-03-15" },
-        { subject: "DBMS", date: "2025-03-18" },
-        { subject: "Operating Systems", date: "2025-03-20" },
-      ],
-      Semester: [
-        { subject: "Data Structures", date: "2025-06-15" },
-        { subject: "DBMS", date: "2025-06-18" },
-        { subject: "Operating Systems", date: "2025-06-20" },
-      ],
-    },
-    "3rd Year": {
-      "Mid-1": [
-        { subject: "Computer Networks", date: "2025-03-17" },
-        { subject: "Software Engineering", date: "2025-03-19" },
-        { subject: "Artificial Intelligence", date: "2025-03-21" },
-      ],
-    },
-    "4th Year": {
-      "Mid-1": [
-        { subject: "Machine Learning", date: "2025-03-25" },
-        { subject: "Cyber Security", date: "2025-03-28" },
-        { subject: "Cloud Computing", date: "2025-03-30" },
-      ],
-    },
-  },
+import axios from "axios"; // Import axios for API calls
 
-  ECE: {
-    "1st Year": {
-      "Mid-1": [
-        { subject: "Basic Electronics", date: "2025-03-11" },
-        { subject: "Digital Logic", date: "2025-03-14" },
-        { subject: "Signals & Systems", date: "2025-03-16" },
-      ],
-      Semester: [
-        { subject: "Basic Electronics", date: "2025-06-11" },
-        { subject: "Digital Logic", date: "2025-06-14" },
-        { subject: "Signals & Systems", date: "2025-06-16" },
-      ],
-    },
-    "2nd Year": {
-      "Mid-1": [
-        { subject: "Analog Circuits", date: "2025-03-15" },
-        { subject: "Microprocessors", date: "2025-03-17" },
-        { subject: "Communication Systems", date: "2025-03-19" },
-      ],
-    },
-  },
-
-  EEE: {
-    "1st Year": {
-      "Mid-1": [
-        { subject: "Circuit Theory", date: "2025-03-12" },
-        { subject: "Electromagnetics", date: "2025-03-15" },
-        { subject: "Electrical Machines", date: "2025-03-18" },
-      ],
-    },
-  },
-
-  MECH: {
-    "1st Year": {
-      "Mid-1": [
-        { subject: "Engineering Drawing", date: "2025-03-13" },
-        { subject: "Mechanics", date: "2025-03-16" },
-        { subject: "Thermodynamics", date: "2025-03-19" },
-      ],
-    },
-  },
-
-  CHEM: {
-    "1st Year": {
-      "Mid-1": [
-        { subject: "Physical Chemistry", date: "2025-03-14" },
-        { subject: "Organic Chemistry", date: "2025-03-17" },
-        { subject: "Chemical Engineering", date: "2025-03-20" },
-      ],
-    },
-  },
-
-  MME: {
-    "1st Year": {
-      "Mid-1": [
-        { subject: "Materials Science", date: "2025-03-15" },
-        { subject: "Metallurgy", date: "2025-03-18" },
-        { subject: "Nanotechnology", date: "2025-03-21" },
-      ],
-    },
-  },
-
-  CIVIL: {
-    "1st Year": {
-      "Mid-1": [
-        { subject: "Structural Analysis", date: "2025-03-16" },
-        { subject: "Surveying", date: "2025-03-19" },
-        { subject: "Concrete Technology", date: "2025-03-22" },
-      ],
-    },
-  },
-};
-const CLIENT_ID =
-  "938531488618-qt5j75gjqc0h29gaecnuqmif3v43f5m1.apps.googleusercontent.com";
+const CLIENT_ID = "938531488618-qt5j75gjqc0h29gaecnuqmif3v43f5m1.apps.googleusercontent.com";
 const API_KEY = "AIzaSyDD6722h6lrebOc-uSuTlonAWPo5HJQVqI";
-// const CALENDAR_ID =
-//   "c_03ffd2ba74177c04f491cd6737939e48b020064b7b62f70dad99e35590de1450@group.calendar.google.com";
 const SCOPES = "https://www.googleapis.com/auth/calendar.events";
 
 export default function ExamSchedule() {
   const [branch, setBranch] = useState("");
   const [year, setYear] = useState("");
   const [examType, setExamType] = useState("");
-  const [showCalendar, setShowCalendar] = useState(false);
-  const schedules =
-    branch && year && examType
-      ? examData[branch]?.[year]?.[examType] || []
-      : [];
-  useEffect(() => {
-    function start() {
-      gapi.client.init({
-        apiKey: API_KEY,
-        clientId: CLIENT_ID,
-        scope: SCOPES,
-      });
-    }
-    gapi.load("client:auth2", start);
-  }, []);
+  const [examData, setExamData] = useState([]); // State for exam data
 
-  const handleAuth = () => {
-    gapi.auth2.getAuthInstance().signIn();
-  };
+  const [showCalendar, setShowCalendar] = useState(false);
+
+  // Fetch exam schedule when branch, year, or examType changes
+  useEffect(() => {
+    if (branch && year && examType) {
+      // Replace with your actual backend API URL
+      const apiUrl = `http://localhost:5000/schedule?branch=${branch}&year=${year}&examType=${examType}`;
+
+      // Fetch the exam data
+      axios.get(apiUrl)
+        .then((response) => {
+          setExamData(response.data[0].exams || []);
+          console.log("sced",response.data[0].exams); // Assuming the response contains an array of exams
+        })
+        .catch((error) => {
+          console.error("Error fetching exam data:", error);
+        });
+    }
+  }, [branch, year, examType]);
 
   return (
     <div
@@ -177,7 +53,7 @@ export default function ExamSchedule() {
       <div className="flex flex-wrap gap-4 mb-8">
         {/* Branch Select */}
         <Select value={branch} onChange={setBranch} placeholder="Select Branch">
-          {Object.keys(examData).map((b) => (
+          {["CSE", "ECE", "EEE", "MECH", "CHEM", "MME", "CIVIL"].map((b) => (
             <SelectItem key={b} value={b}>
               {b}
             </SelectItem>
@@ -192,7 +68,7 @@ export default function ExamSchedule() {
           disabled={!branch}
         >
           {branch &&
-            Object.keys(examData[branch]).map((y) => (
+            ["1st Year", "2nd Year", "3rd Year", "4th Year"].map((y) => (
               <SelectItem key={y} value={y}>
                 {y}
               </SelectItem>
@@ -207,6 +83,8 @@ export default function ExamSchedule() {
           disabled={!year}
         >
           <SelectItem value="Mid-1">Mid-1</SelectItem>
+          <SelectItem value="Mid-2">Mid-2</SelectItem>
+          <SelectItem value="Mid-3">Mid-3</SelectItem>
           <SelectItem value="Semester">Semester</SelectItem>
         </Select>
       </div>
@@ -217,8 +95,8 @@ export default function ExamSchedule() {
         animate={{ y: 0, opacity: 1 }}
         className="w-full flex flex-col items-center"
       >
-        {schedules.length > 0 ? (
-          schedules.map((exam, index) => (
+        {examData.length > 0 ? (
+          examData.map((exam, index) => (
             <Card key={index} className="mb-4">
               <CardContent title={exam.subject} date={exam.date} />
             </Card>
@@ -229,6 +107,7 @@ export default function ExamSchedule() {
           </p>
         )}
       </motion.div>
+
       <button
         onClick={() => setShowCalendar(!showCalendar)}
         className="mt-6 px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition"
@@ -250,14 +129,6 @@ export default function ExamSchedule() {
           ></iframe>
         </div>
       )}
-      <div>
-        {/* <button
-          onClick={handleAuth}
-          className="bg-blue-500 text-white px-4 py-2 rounded"
-        >
-          Connect to Google Calendar
-        </button> */}
-      </div>
     </div>
   );
 }

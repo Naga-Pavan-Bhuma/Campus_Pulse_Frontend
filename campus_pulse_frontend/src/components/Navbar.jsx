@@ -33,7 +33,7 @@ const Navbar = ({ userName = "John Doe", announcementCount = 0, onNotificationCl
 
         {/* Profile Circle */}
         <div className="w-9 h-9 bg-blue-600 text-white flex items-center justify-center rounded-full font-semibold">
-          {userName?.[0]?.toUpperCase() || "U"}
+          {userName?.[0]?.toUpperCase() || "P"}
         </div>
       </div>
     </header>

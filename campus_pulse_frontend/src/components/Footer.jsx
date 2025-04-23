@@ -33,7 +33,7 @@ export default function Footer() {
             transition={{ duration: 0.3 }}
           >
             <FaEnvelope className="text-xl" />
-            <span>contact@universitycollab.com</span>
+            <span>campusepulse@gmail.com</span>
           </motion.div>
           <motion.div
             className="flex items-center gap-2 text-gray-400 hover:text-white"
@@ -41,7 +41,7 @@ export default function Footer() {
             transition={{ duration: 0.3 }}
           >
             <FaPhoneAlt className="text-xl" />
-            <span>+123 456 7890</span>
+            <span>+91 9876543210</span>
           </motion.div>
           <motion.div
             className="flex items-center gap-2 text-gray-400 hover:text-white"
@@ -49,7 +49,7 @@ export default function Footer() {
             transition={{ duration: 0.3 }}
           >
             <FaMapMarkerAlt className="text-xl" />
-            <span>123 Campus Lane, City, Country</span>
+            <span>Idupulapaya, YSR Dist, A.P - 516330</span>
           </motion.div>
         </div>
       </div>
@@ -82,9 +82,8 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Copyright */}
       <p className="text-sm text-gray-400">
-        &copy; 2025 <span className="text-blue-400 font-semibold">University Collab</span>. All Rights Reserved.
+        &copy; 2025 <span className="text-blue-400 font-semibold">Campus Pulse</span>. All Rights Reserved.
       </p>
     </footer>
   );

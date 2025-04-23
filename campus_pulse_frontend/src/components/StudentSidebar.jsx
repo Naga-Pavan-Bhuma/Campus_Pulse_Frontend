@@ -1,13 +1,20 @@
 import { Home, Users, MessageCircle, Briefcase, Calendar, LogOut } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { FaUtensils } from "react-icons/fa";
-
+import axios from "axios";
 const StudentSidebar = () => {
   const navigate = useNavigate();
-
-  const handleLogout = () => {
-    sessionStorage.removeItem("authToken"); // Remove stored token
-    navigate("/login"); // Redirect to login page
+  const API_URL = process.env.REACT_APP_BACKEND_URL;
+  const handleLogout = async () => {
+    try {
+      // Make a request to the backend to logout the user (clear cookies on server-side)
+      await axios.get(`${API_URL}/logout`, { withCredentials: true });
+  
+      // Redirect to the login page
+      navigate("/login");
+    } catch (err) {
+      console.error("Error logging out:", err);
+    }
   };
 
   return (

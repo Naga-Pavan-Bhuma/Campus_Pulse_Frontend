@@ -16,10 +16,11 @@ const MainLayout = () => {
     // Fetch user details
     const fetchUserDetails = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/user", {
+        const res = await axios.get("http://localhost:5000/me", {
           withCredentials: true,
         });
-        setUserName(`${res.data.firstName} ${res.data.lastName}`);
+        console.log("User details:", res.data); // Debugging user details
+        setUserName(`${res.data.user.firstName} ${res.data.user.lastName}`);
       } catch (err) {
         console.error("Error fetching user details:", err);
       }

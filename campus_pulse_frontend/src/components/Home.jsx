@@ -35,7 +35,7 @@ export default function Home() {
 
 // 🎠 Carousel Section
 function CarouselSection() {
-  const slides = ["/c1.png", "/c2.png", "/c3.png"];
+  const slides = ["/c1.gif", "/c2.png", "/c3.png"];
 
   return (
     <div className="relative z-0 mt-2">
@@ -66,7 +66,6 @@ function CarouselSection() {
   );
 }
 
-// 🚀 Features Section
 function FeaturesSection() {
   const features = [
     {
@@ -127,23 +126,22 @@ function FeaturesSection() {
   );
 }
 
-// 🌟 Testimonials Section
 function TestimonialsSection() {
   const testimonials = [
     {
-      name: "Alice Johnson",
-      role: "Computer Science Student",
-      text: "This platform has transformed our university discussions. It's structured and easy to use!",
+      name: "Dr. Ratna Kumari Challa",
+      role: "HOD - Dept. of CSE",
+      text: "This platform makes the students to get all updates efficiently. It's structured and easy to use!",
     },
     {
-      name: "Dr. Michael Smith",
-      role: "Professor",
+      name: "Dr. Mahendra",
+      role: "IT Infra Head",
       text: "Finally, a way to interact with students seamlessly. This is the future of education.",
     },
     {
-      name: "John Doe",
-      role: "Alumnus",
-      text: "Connecting with students and guiding them has never been easier!",
+      name: "Naga Pavan",
+      role: "Student",
+      text: "Connecting with Friends and getting all latest updates quickly!",
     },
   ];
 
