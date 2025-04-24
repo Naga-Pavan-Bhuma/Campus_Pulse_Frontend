@@ -7,30 +7,28 @@ import axios from "axios";
 import AnnouncementPopup from "./AnnouncemetPopup";
 
 const MainLayout = () => {
-  const [showPopup, setShowPopup] = useState(false); // State to control popup visibility
+  const [showPopup, setShowPopup] = useState(false);
   const [userName, setUserName] = useState("");
-  const [announcementCount, setAnnouncementCount] = useState(0); // Store announcement count
+  const [announcementCount, setAnnouncementCount] = useState(0);
+  const [announcements, setAnnouncements] = useState([]); // <-- NEW STATE
   const location = useLocation();
 
   useEffect(() => {
-    // Fetch user details
     const fetchUserDetails = async () => {
       try {
         const res = await axios.get("http://localhost:5000/me", {
           withCredentials: true,
         });
-        console.log("User details:", res.data); // Debugging user details
         setUserName(`${res.data.user.firstName} ${res.data.user.lastName}`);
       } catch (err) {
         console.error("Error fetching user details:", err);
       }
     };
 
-    // Fetch announcement count
     const fetchAnnouncementCount = async () => {
       try {
         const res = await axios.get("http://localhost:5000/announcements");
-        setAnnouncementCount(res.data.length); // Assuming response contains array of announcements
+        setAnnouncementCount(res.data.length);
       } catch (err) {
         console.error("Error fetching announcements:", err);
       }
@@ -40,18 +38,20 @@ const MainLayout = () => {
     fetchAnnouncementCount();
   }, [location.pathname]);
 
-  // Function to show the popup
-  const handleNotificationClick = () => {
-    setShowPopup(true); // Show the popup when the notification icon is clicked
+  // ✅ Fetch announcements when notification is clicked
+  const handleNotificationClick = async () => {
+    try {
+      const res = await axios.get("http://localhost:5000/announcements");
+      setAnnouncements(res.data); // <-- Save actual announcements
+      setShowPopup(true); // Show the popup
+    } catch (err) {
+      console.error("Error fetching announcements:", err);
+    }
   };
 
-  // Render sidebar based on path
   const renderSidebar = () => {
-    if (location.pathname.startsWith("/faculty")) {
-      return <FacultySidebar />;
-    } else if (location.pathname.startsWith("/student")) {
-      return <StudentSidebar />;
-    }
+    if (location.pathname.startsWith("/faculty")) return <FacultySidebar />;
+    if (location.pathname.startsWith("/student")) return <StudentSidebar />;
     return null;
   };
 
@@ -62,18 +62,18 @@ const MainLayout = () => {
         <Navbar
           userName={userName}
           announcementCount={announcementCount}
-          onNotificationClick={handleNotificationClick} // Pass the function to Navbar
+          onNotificationClick={handleNotificationClick}
         />
         <div className="p-6 bg-gray-100 h-full overflow-auto">
           <Outlet />
         </div>
       </div>
 
-      {/* Display popup when showPopup is true */}
+      {/* ✅ Pass announcements to the popup */}
       {showPopup && (
         <AnnouncementPopup
-          announcements={[]} // You can pass actual announcements here
-          onClose={() => setShowPopup(false)} // Close popup when close button is clicked
+          announcements={announcements}
+          onClose={() => setShowPopup(false)}
         />
       )}
     </div>

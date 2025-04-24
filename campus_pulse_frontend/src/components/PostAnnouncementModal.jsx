@@ -5,20 +5,33 @@ import axios from "axios";
 const PostAnnouncementModal = ({ isOpen, onClose }) => {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
+    const [successMsg, setSuccessMsg] = useState("");
     const API_URL = process.env.REACT_APP_BACKEND_URL;
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post(`${API_URL}/annoucements`, {
+            const response = await axios.post(`${API_URL}/announcements`, {
                 title,
-                content, // or get dynamically from logged-in user
+                content,
             }, { withCredentials: true });
-            onClose();
+    
+            if (response.status === 200 || response.status === 201) {
+                setSuccessMsg("Announcement posted successfully!");
+                setTitle("");
+                setContent("");
+                setTimeout(() => {
+                    setSuccessMsg("");
+                    onClose();
+                }, 1500);
+            } else {
+                console.error("Unexpected response:", response);
+            }
         } catch (error) {
             console.error("Error posting announcement:", error);
         }
     };
+    
 
     return (
         <AnimatePresence>
@@ -36,6 +49,13 @@ const PostAnnouncementModal = ({ isOpen, onClose }) => {
                         exit={{ scale: 0.9 }}
                     >
                         <h2 className="text-xl font-bold mb-4 text-blue-600 text-center">Post Announcement</h2>
+
+                        {successMsg && (
+                            <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-2 rounded mb-3 text-center">
+                                {successMsg}
+                            </div>
+                        )}
+
                         <form onSubmit={handleSubmit} className="space-y-4">
                             <input
                                 type="text"
