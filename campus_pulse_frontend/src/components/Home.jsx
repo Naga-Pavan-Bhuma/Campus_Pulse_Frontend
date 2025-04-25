@@ -1,5 +1,8 @@
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+import { FaCalendarAlt, FaBullhorn, FaClipboardList, FaUserShield } from "react-icons/fa";
+
 import {
   FaUsers,
   FaBell,
@@ -69,28 +72,28 @@ function CarouselSection() {
 function FeaturesSection() {
   const features = [
     {
-      icon: <FaUsers />,
+      icon: <FaClipboardList />,
       color: "text-blue-500",
-      title: "Community Engagement",
-      desc: "Connect with peers, faculty, and alumni.",
+      title: "Smart Timetables",
+      desc: "Access real-time class schedules based on your department and year.",
     },
     {
-      icon: <FaBell />,
+      icon: <FaBullhorn />,
       color: "text-green-500",
-      title: "Instant Notifications",
-      desc: "Stay updated with important announcements.",
+      title: "Live Announcements",
+      desc: "Stay instantly updated with campus-wide announcements and faculty posts.",
     },
     {
-      icon: <FaRocket />,
+      icon: <FaCalendarAlt />,
       color: "text-red-500",
-      title: "Career Opportunities",
-      desc: "Explore jobs, internships, and networking.",
+      title: "Event Management",
+      desc: "Get the latest updates on campus events and activities.",
     },
     {
-      icon: <FaHandshake />,
+      icon: <FaUserShield />,
       color: "text-purple-500",
-      title: "Collaboration",
-      desc: "Work on projects and participate in discussions.",
+      title: "Role-Based Dashboards",
+      desc: "Tailored experiences for Admins, Faculty, Students, and Managers.",
     },
   ];
 
@@ -129,12 +132,12 @@ function FeaturesSection() {
 function TestimonialsSection() {
   const testimonials = [
     {
-      name: "Dr. Ratna Kumari Challa",
+      name: "Dr. Ratna Kumari Challa Mam",
       role: "HOD - Dept. of CSE",
       text: "This platform makes the students to get all updates efficiently. It's structured and easy to use!",
     },
     {
-      name: "Dr. Mahendra",
+      name: "Asst.Prof Mahendra Sir",
       role: "IT Infra Head",
       text: "Finally, a way to interact with students seamlessly. This is the future of education.",
     },
@@ -146,30 +149,47 @@ function TestimonialsSection() {
   ];
 
   return (
-    <section className="py-24 px-6 bg-gradient-to-br from-blue-50 via-white to-purple-50 text-center">
-      <motion.h2
-        className="text-4xl font-extrabold mb-16 text-gray-900"
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-      >
-        What Users Say
-      </motion.h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-6xl mx-auto">
-        {testimonials.map((testimonial, index) => (
-          <motion.div
-            key={index}
-            className="bg-white rounded-2xl shadow-xl p-8 border-l-4 border-blue-500 hover:shadow-blue-200 transition-all hover:-translate-y-2"
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ delay: index * 0.2 }}
+    <section className="py-24 px-6 bg-gradient-to-br from-blue-50 via-white to-purple-50">
+      <div className="max-w-7xl mx-auto flex flex-col items-center gap-10">
+        
+        {/* Testimonials Section */}
+        <div className="w-full text-center lg:text-left">
+          <motion.h2
+            className="text-4xl font-extrabold mb-10 text-gray-900"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
           >
-            <p className="italic text-gray-700 mb-6 text-lg">“{testimonial.text}”</p>
-            <h3 className="text-lg font-semibold text-gray-900">{testimonial.name}</h3>
-            <p className="text-sm text-gray-500">{testimonial.role}</p>
-          </motion.div>
-        ))}
+            What Users Say
+          </motion.h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {testimonials.map((testimonial, index) => (
+              <motion.div
+                key={index}
+                className="bg-white rounded-2xl shadow-xl p-6 border-l-4 border-blue-500 hover:shadow-blue-200 transition-all hover:-translate-y-2"
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ delay: index * 0.2 }}
+              >
+                <p className="italic text-gray-700 mb-4 text-lg">“{testimonial.text}”</p>
+                <h3 className="text-lg font-semibold text-gray-900">{testimonial.name}</h3>
+                <p className="text-sm text-gray-500">{testimonial.role}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+  
+        {/* Lottie Animation at the Bottom */}
+        <div className="w-full max-w-md">
+          <DotLottieReact
+            src="https://lottie.host/2f5c6b86-c362-419e-a60c-82d11c57d1d8/KatBHzWIU9.lottie"
+            loop
+            autoplay
+            style={{ width: '100%', height: 'auto' }}
+          />
+        </div>
       </div>
     </section>
   );
+    
 }

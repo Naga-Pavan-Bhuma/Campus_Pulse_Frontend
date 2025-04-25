@@ -12,33 +12,33 @@ const CameraForm = ({ onClose }) => {
   const webcamRef = useRef(null);
   const [loading, setLoading] = useState(false);
   const [userDetails, setUserDetails] = useState(null);
-  const [error, setError] = useState(null);  // New state for error handling
+  const [error, setError] = useState(null); 
 
   const captureAndSend = async () => {
     const imageSrc = webcamRef.current.getScreenshot();
     if (!imageSrc) return;
 
     setLoading(true);
-    setError(null);  // Reset error state
+    setError(null); 
 
     try {
         const formData = new FormData();
-        const blob = await (await fetch(imageSrc)).blob();  // Convert base64 to blob
+        const blob = await (await fetch(imageSrc)).blob(); 
         const file = new File([blob], "capturedImage.jpg", { type: "image/jpeg" });
-        formData.append("image", file);  // Append the image to form data
-      // Step 1: Send image to the backend for facial recognition
-      const response = await axios.post("http://192.168.221.213:8000/details", formData, {
+        formData.append("image", file);  
+        
+      const response = await axios.post("http://192.168.183.213:8000/details", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
      });
 
       const identifiedUser = response.data;
-      setUserDetails(identifiedUser);  // Set the user details
+      setUserDetails(identifiedUser);  
 
     } catch (error) {
       console.error("Error during image processing or details fetch:", error);
-      setError("Failed to identify user or fetch full details.");  // Display error message
+      setError("Failed to identify user or fetch full details.");  
     }
 
     setLoading(false);
@@ -50,7 +50,7 @@ const CameraForm = ({ onClose }) => {
         <h2 className="text-xl font-semibold mb-4 text-black">Capture Image</h2>
 
         {error && (
-          <div className="mb-4 text-red-500">{error}</div> // Display error message
+          <div className="mb-4 text-red-500">{error}</div> 
         )}
 
         {!userDetails ? (
@@ -70,7 +70,7 @@ const CameraForm = ({ onClose }) => {
               disabled={loading}
             >
               {loading ? (
-                <span className="spinner-border spinner-border-sm"></span> // Optionally show a spinner
+                <span className="spinner-border spinner-border-sm"></span> 
               ) : (
                 "Capture & Identify"
               )}
@@ -82,7 +82,6 @@ const CameraForm = ({ onClose }) => {
             <p><strong>ID:</strong> {userDetails.id}</p>
             <p><strong>CGPA:</strong> {userDetails.cgpa}</p>
             <p><strong>Attendance Percentage:</strong> {userDetails.attendance}</p>
-            {/* Add more fields from detailsResponse if needed */}
           </div>
         )}
 

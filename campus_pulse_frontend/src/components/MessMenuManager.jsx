@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import EditableMealSection from "./EditableMealSection"; // import the reusable component
+import EditableMealSection from "./EditableMealSection";
 
 const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 const meals = ["breakfast", "lunch", "snacks", "dinner"];
@@ -8,25 +8,34 @@ const meals = ["breakfast", "lunch", "snacks", "dinner"];
 const MessMenuManager = () => {
   const [menuData, setMenuData] = useState({});
   const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(false); // for loading state during save
+  const [loading, setLoading] = useState(false);
+  const [selectedMess, setSelectedMess] = useState("Mess1");
+  const [messes, setMesses] = useState({});
+
+  const fetchMenus = async () => {
+    try {
+      const res = await axios.get("http://localhost:5000/menu");
+      const data = res.data || {};
+      setMesses(data);
+      if (data[selectedMess]) {
+        setMenuData(data[selectedMess]);
+      } else {
+        setMenuData({});
+      }
+    } catch (err) {
+      console.error("Error fetching mess menus:", err);
+    }
+  };
 
   useEffect(() => {
-    const fetchMenu = async () => {
-      try {
-        const res = await axios.get("http://localhost:5000/menu");
-        const messObj = res.data?.Mess1 || res.data[0]?.Mess1;
-        setMenuData(messObj || {});
-      } catch (err) {
-        console.error("Error fetching mess menu:", err);
-      }
-    };
-
-    fetchMenu();
-  }, []);
+    fetchMenus();
+  }, [selectedMess]);
 
   const handleSave = async (day, meal, updatedItems) => {
-    setLoading(true); // Start loading
-    const updatedData = {
+    setLoading(true);
+    console.log("Saving", { day, meal, updatedItems });
+
+    const updatedMenu = {
       ...menuData,
       [day]: {
         ...menuData[day],
@@ -34,20 +43,28 @@ const MessMenuManager = () => {
       },
     };
 
-    setMenuData(updatedData);
+    const updatedMesses = {
+      ...messes,
+      [selectedMess]: updatedMenu,
+    };
+
+    setMenuData(updatedMenu);
+    setMesses(updatedMesses);
 
     try {
-      await axios.put("http://localhost:5000/menu", {
-        Mess1: updatedData,
-      });
+      await axios.put("http://localhost:5000/menu", updatedMesses);
+
+      const res = await axios.get("http://localhost:5000/menu");
+      setMesses(res.data || {});
+      setMenuData(res.data[selectedMess] || {});
+
       setMessage("Menu updated successfully!");
-      setTimeout(() => setMessage(""), 3000);
     } catch (err) {
       console.error("Error updating menu:", err);
       setMessage("Error updating menu.");
-      setTimeout(() => setMessage(""), 3000);
     } finally {
-      setLoading(false); // Stop loading
+      setTimeout(() => setMessage(""), 3000);
+      setLoading(false);
     }
   };
 
@@ -55,10 +72,24 @@ const MessMenuManager = () => {
     <div className="bg-gradient-to-r from-blue-100 via-indigo-100 to-purple-100 p-8 rounded-lg shadow-xl transition-all duration-500 ease-in-out">
       <h2 className="text-3xl font-semibold mb-6 text-blue-700 text-center transition-all duration-300">Mess Menu Editor</h2>
 
-      {message && (
-        <div
-          className={`mb-4 text-lg font-semibold text-center ${message === "Menu updated successfully!" ? "text-green-600" : "text-red-600"}`}
+      {/* Dropdown to select mess */}
+      <div className="mb-6 text-center">
+        <label className="mr-4 text-lg text-black font-semibold">Select Mess: </label>
+        <select
+          value={selectedMess}
+          onChange={(e) => setSelectedMess(e.target.value)}
+          className="px-4 py-2 border rounded-lg"
         >
+          {Object.keys(messes).map((mess) => (
+            <option key={mess} value={mess}>
+              {mess}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {message && (
+        <div className={`mb-4 text-lg font-semibold text-center ${message.includes("success") ? "text-green-600" : "text-red-600"}`}>
           {message}
         </div>
       )}

@@ -5,9 +5,10 @@ const EditableMealSection = ({ day, meal, items, onSave }) => {
   const [mealItems, setMealItems] = useState(items.join(", "));
 
   const handleSave = () => {
+    // Update the items array by trimming spaces and removing empty entries
     const updatedItems = mealItems.split(",").map(item => item.trim()).filter(Boolean);
-    onSave(day, meal, updatedItems);
-    setEditMode(false);
+    onSave(day, meal, updatedItems); // Save the updated items
+    setEditMode(false); // Exit edit mode after saving
   };
 
   return (
@@ -18,10 +19,11 @@ const EditableMealSection = ({ day, meal, items, onSave }) => {
           <textarea
             className="w-full p-2 border border-gray-300 rounded"
             value={mealItems}
-            onChange={(e) => setMealItems(e.target.value)}
+            onChange={(e) => setMealItems(e.target.value)} // Update meal items as user types
+            placeholder="Enter items separated by commas"
           />
           <button
-            onClick={handleSave}
+            onClick={handleSave} // Save the changes when clicked
             className="self-start bg-green-600 text-white px-4 py-1 rounded"
           >
             Save
@@ -30,10 +32,14 @@ const EditableMealSection = ({ day, meal, items, onSave }) => {
       ) : (
         <div className="flex justify-between items-center">
           <ul className="list-disc list-inside text-gray-600">
-            {items.length ? items.map((item, i) => <li key={i}>{item}</li>) : <li>No items listed</li>}
+            {items.length ? (
+              items.map((item, i) => <li key={i}>{item}</li>) // Display each item as a list
+            ) : (
+              <li>No items listed</li> // Show message if no items are present
+            )}
           </ul>
           <button
-            onClick={() => setEditMode(true)}
+            onClick={() => setEditMode(true)} // Enable edit mode when clicked
             className="bg-blue-500 text-white px-3 py-1 rounded text-sm"
           >
             Edit

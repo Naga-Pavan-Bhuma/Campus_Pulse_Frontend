@@ -26,7 +26,7 @@ export default function ExamSchedule() {
       axios.get(apiUrl)
         .then((response) => {
           setExamData(response.data[0].exams || []);
-          console.log("sced",response.data[0].exams); // Assuming the response contains an array of exams
+          console.log("exam schedule", response.data[0].exams); // Assuming the response contains an array of exams
         })
         .catch((error) => {
           console.error("Error fetching exam data:", error);
@@ -36,11 +36,10 @@ export default function ExamSchedule() {
 
   return (
     <div
-      className="flex bg-cover bg-center flex-col bg-ima items-center justify-center min-h-screen bg-gradient-to-r from-blue-100 to-pink-100 text-gray-900 p-6"
-      style={{ backgroundImage: "url('/examschedulebg.jpg')" }}
+      className="flex bg-gradient-to-r from-blue-500 to-teal-500 flex-col items-center justify-center min-h-screen text-white p-6"
     >
       <motion.h1
-        className="text-4xl font-extrabold mb-6 text-transparent bg-clip-text 
+        className="text-5xl font-extrabold mb-6 text-transparent bg-clip-text 
              bg-gradient-to-r from-white to-gray-300 drop-shadow-lg"
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
@@ -50,9 +49,9 @@ export default function ExamSchedule() {
       </motion.h1>
 
       {/* Select Dropdowns */}
-      <div className="flex flex-wrap gap-4 mb-8">
+      <div className="flex flex-wrap gap-4 mb-8 max-w-4xl w-full justify-center">
         {/* Branch Select */}
-        <Select value={branch} onChange={setBranch} placeholder="Select Branch">
+        <Select value={branch} onChange={setBranch} placeholder="Select Branch" className="w-52">
           {["CSE", "ECE", "EEE", "MECH", "CHEM", "MME", "CIVIL"].map((b) => (
             <SelectItem key={b} value={b}>
               {b}
@@ -66,6 +65,7 @@ export default function ExamSchedule() {
           onChange={setYear}
           placeholder="Select Year"
           disabled={!branch}
+          className="w-52"
         >
           {branch &&
             ["1st Year", "2nd Year", "3rd Year", "4th Year"].map((y) => (
@@ -81,6 +81,7 @@ export default function ExamSchedule() {
           onChange={setExamType}
           placeholder="Select Exam"
           disabled={!year}
+          className="w-52"
         >
           <SelectItem value="Mid-1">Mid-1</SelectItem>
           <SelectItem value="Mid-2">Mid-2</SelectItem>
@@ -97,12 +98,12 @@ export default function ExamSchedule() {
       >
         {examData.length > 0 ? (
           examData.map((exam, index) => (
-            <Card key={index} className="mb-4">
+            <Card key={index} className="mb-4 w-full max-w-md">
               <CardContent title={exam.subject} date={exam.date} />
             </Card>
           ))
         ) : (
-          <p className="text-white font-medium">
+          <p className="font-medium text-xl text-center">
             Select a Branch, Year & Exam Type to view the schedule.
           </p>
         )}
@@ -110,7 +111,7 @@ export default function ExamSchedule() {
 
       <button
         onClick={() => setShowCalendar(!showCalendar)}
-        className="mt-6 px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition"
+        className="mt-6 px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition duration-300"
       >
         {showCalendar ? "Hide Calendar" : "View Calendar"}
       </button>

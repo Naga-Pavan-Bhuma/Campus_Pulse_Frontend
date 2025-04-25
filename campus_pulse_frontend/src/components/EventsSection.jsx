@@ -74,9 +74,9 @@ export default function EventsSection() {
         </div>
 
         {/* Right Section (Image) */}
-        <div className="md:w-1/3 flex justify-end items-center"> {/* Align image to the right */}
+        <div className="md:w-1/3 flex justify-end items-center"> 
           <motion.img
-            src="./robot.gif"  // Replace with your image URL
+            src="./robot.gif" 
             alt="Event Image"
             className="w-full h-auto"
             initial={{ opacity: 0 }}

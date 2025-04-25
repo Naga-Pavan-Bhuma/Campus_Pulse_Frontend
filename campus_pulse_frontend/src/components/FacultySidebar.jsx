@@ -22,8 +22,9 @@ const FacultySidebar = () => {
         <NavItem to="/faculty" icon={<Home size={22} />} label="Home" />
         <NavItem to="examschedule" icon={<Calendar size={22} />} label="Exam Schedule" />
         <NavItem to="foodmenu" icon={<FaUtensils size={22} />} label="Food Menu" />
-        {/* New Edit Timetable option */}
+        <NavItem to="calendar" icon={<Calendar size={22} />} label="View Calendar" />
         <NavItem to="edit-timetable" icon={<Calendar size={22} />} label="Edit Timetable" />
+        
       </nav>
 
       {/* Logout Button */}

@@ -72,17 +72,15 @@ const AcademicCalendar = () => {
           <div key={day} className="p-2 sm:p-4 border border-gray-400 min-h-[90px] relative hover:bg-blue-100 hover:bg-opacity-20 transition-all duration-300 group rounded-md">
             <span className="text-sm font-bold text-blue-600">{format(day, 'd')}</span>
 
-            {/* Sunday Holiday */}
             {isSunday && (
               <div className="text-xs mt-1 px-2 py-1 rounded bg-red-500 text-white w-fit shadow-sm">
                 Holiday
               </div>
             )}
 
-            {/* Events */}
             {dayEvents.map((event, idx) => (
               <div key={idx} className="relative group text-xs mt-1 w-full max-w-full">
-                <div className={`px-2 py-1 rounded shadow-md truncate ${event.type === 'exam' ? 'bg-red-500' : 'bg-green-500'} text-white`}>
+                <div className={`px-2 py-1 rounded shadow-md truncate ${event.type === 'exam' ? 'bg-orange-500' : 'bg-green-500'} text-white`}>
                   {event.title.length > 10 ? event.title.slice(0, 10) + '…' : event.title}
                 </div>
                 <div className="absolute z-20 bottom-full mb-1 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-90 text-white text-xs p-2 rounded shadow-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200 w-max max-w-xs text-center pointer-events-none">
@@ -109,10 +107,6 @@ const AcademicCalendar = () => {
   Academic Calendar
 </h1>
 
-
-
-
-        {/* Form Section */}
         <form onSubmit={handleSubmit} className="bg-white bg-opacity-80 p-6 rounded-2xl shadow-lg backdrop-blur-lg mb-8">
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
             <div className="w-full sm:w-48">
@@ -143,7 +137,6 @@ const AcademicCalendar = () => {
           </div>
         </form>
 
-        {/* Calendar View */}
         {showCalendar && (
           <div className="bg-white bg-opacity-90 p-6 rounded-2xl shadow-xl backdrop-blur-md">
             {renderHeader()}
@@ -152,7 +145,6 @@ const AcademicCalendar = () => {
           </div>
         )}
 
-        {/* No Events Message */}
         {showCalendar && events.length === 0 && !loading && (
           <div className="text-center text-red-500 mt-6 font-semibold">No events found for this selection.</div>
         )}

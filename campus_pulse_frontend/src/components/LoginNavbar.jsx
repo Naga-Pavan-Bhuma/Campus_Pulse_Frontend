@@ -20,7 +20,6 @@ const LoginNavbar = () => {
             <li><a href="#">Student</a></li>
             <li><a href="#">Faculty</a></li>
             <li><a href="#">Admin</a></li>
-            <li><Link to="/examschedule">Exam Schedule</Link></li>
           </ul>
         </div>
 

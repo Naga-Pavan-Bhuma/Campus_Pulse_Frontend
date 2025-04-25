@@ -7,50 +7,47 @@ import {
   FaClock,
   FaUsers,
   FaBookOpen,
+  FaUtensils,
   FaCalendarAlt
 } from "react-icons/fa";
 import PostAnnouncementModal from "./PostAnnouncementModal";
-import CameraForm from "./CameraForm"; // 📸 Import your CameraForm
-
+import CameraForm from "./CameraForm";
 const facultyOptions = [
   {
     title: "Post Announcement",
     icon: FaBullhorn,
     description: "Keep students and staff updated with the latest info.",
-    bg: "from-yellow-500 to-yellow-600"
+    bg: "from-amber-500 to-orange-600"
   },
   {
     title: "Edit Timetable",
     icon: FaClock,
     description: "Manage class schedules for your department.",
-    bg: "from-blue-500 to-blue-600",
+    bg: "from-indigo-500 to-purple-600",
     link: "/faculty/edit-timetable"
   },
   {
-    title: "Schedule Meetings",
-    icon: FaCalendarAlt,
-    description: "Coordinate departmental or student meetings easily.",
-    bg: "from-green-500 to-green-600"
+    title: "View Food Menu",
+    icon: FaUtensils,
+    description: "Check the daily mess menu and weekly meal plans.",
+    bg: "from-lime-500 to-green-600",
+    link: "/faculty/foodmenu"
   },
   {
-    title: "Discussion Forum",
-    icon: FaUsers,
-    description: "Engage with faculty and share ideas.",
-    bg: "from-purple-500 to-purple-600"
-  },
-  {
-    title: "Share Resources",
+    title: "View Academic Calendar",
     icon: FaBookOpen,
-    description: "Upload PDFs, slides, and notes for your students.",
-    bg: "from-pink-500 to-pink-600"
+    description: "Stay updated with important academic events and holidays.",
+    bg: "from-sky-500 to-blue-600",
+    link: "/faculty/calendar"
   },
   {
-    title: "Take Photo & Fill Details",
+    title: "Scan Student & Get Details",
     icon: FaUsers,
-    description: "Capture photo and submit academic data.",
-    bg: "from-red-500 to-red-600"
+    description: "Scan student face and retrieve academic and personal information.",
+    bg: "from-rose-500 to-pink-600"
   }
 ];
+
 
 const Faculty = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -60,7 +57,7 @@ const Faculty = () => {
   const handleCardClick = (title, link) => {
     if (title === "Post Announcement") {
       setIsModalOpen(true);
-    } else if (title === "Take Photo & Fill Details") {
+    } else if (title === "Scan Student & Get Details") {
       setIsCameraFormOpen(true);
     } else if (link) {
       navigate(link);

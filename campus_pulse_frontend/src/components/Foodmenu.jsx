@@ -57,9 +57,9 @@ const Foodmenu = () => {
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
-          className="text-5xl font-extrabold text-center mb-12 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 text-transparent bg-clip-text drop-shadow-xl"
-        >
-          🍽 Campus Mess Menu
+          className="text-5xl font-extrabold text-center mb-12 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 text-transparent bg-clip-text drop-shadow-xl"
+          >
+           Campus Mess Menu
         </motion.h1>
 
         <motion.div

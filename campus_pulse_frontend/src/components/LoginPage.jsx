@@ -33,7 +33,7 @@ const LoginPage = () => {
             ? await axios.post(`${API_URL}/admin/login`, { email, password }, { withCredentials: true })
             : await axios.post(`${API_URL}/student/login`, { email, password }, { withCredentials: true })
           : await axios.post(`${API_URL}/faculty/login`, { facultyId, password }, { withCredentials: true });
-
+      console.log(result.data);
       alert("Login successful");
 
       // Role-specific redirection

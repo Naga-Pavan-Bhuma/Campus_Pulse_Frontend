@@ -14,11 +14,11 @@ const navOptions = [
     link: "/student/clubs",
   },
   {
-    title: "Careers",
-    icon: <FaLaptopCode />,
-    description: "Get updates on internships, jobs, and workshops.",
+    title: "Academic Calendar",
+    icon: <FaCalendarAlt />,
+    description: "Check Your Academic Calendar and important dates.",
     color: "from-green-400 to-green-600",
-    link: "/careers",
+    link: "/student/calendar",
   },
   {
     title: "Exam Schedule",

@@ -7,7 +7,7 @@ const AddFacultyForm = () => {
     facultyId: "",
   });
   const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(false); // Loading state
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setFaculty({ ...faculty, [e.target.name]: e.target.value });
@@ -16,7 +16,7 @@ const AddFacultyForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    console.log("Submitting faculty:", faculty); // ✅ Add this
+    console.log("Submitting faculty:", faculty); 
   
     try {
       await axios.post("http://localhost:5000/faculties", faculty);
@@ -24,7 +24,7 @@ const AddFacultyForm = () => {
       setFaculty({ name: "", facultyId: "" });
     } catch (error) {
       setMessage("Error adding faculty.");
-      console.error("AXIOS ERROR:", error.response?.data || error.message); // ✅ Show response error
+      console.error("AXIOS ERROR:", error.response?.data || error.message); 
     } finally {
       setLoading(false);
     }
@@ -60,7 +60,7 @@ const AddFacultyForm = () => {
         <button
           type="submit"
           className="bg-blue-600 text-white py-2 px-4 rounded-md w-full hover:bg-blue-700 transition"
-          disabled={loading} // Disable button when loading
+          disabled={loading} 
         >
           {loading ? "Adding..." : "Add Faculty"}
         </button>

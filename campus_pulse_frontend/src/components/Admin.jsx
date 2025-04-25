@@ -6,7 +6,7 @@ import AddUserForm from "./AddFacultyForm";
 import MessMenuManager from "./MessMenuManager";
 import AdminExamSchedule from "./AdminExamSchedule";
 import AdminEventForm from "./AdminEventForm";
-
+import AddEventForm from "./AddEventForm";
 const Admin = () => {
   const [selectedSection, setSelectedSection] = useState("User Management");
 
@@ -28,6 +28,11 @@ const Admin = () => {
           <>
             <UserManagement />
             <AddUserForm />
+          </>
+        )}
+        {selectedSection === "Update Academic Calendar" && (
+          <>
+            <AddEventForm />
           </>
         )}
         {selectedSection === "Update Events" && (
