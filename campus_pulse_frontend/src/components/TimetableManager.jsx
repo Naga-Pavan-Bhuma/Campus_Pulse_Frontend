@@ -6,7 +6,7 @@ import TimetableTable from './TimetableTable';
 const TimetableManager = () => {
   const [selectedDept, setSelectedDept] = useState('CSE');
   const [selectedClass, setSelectedClass] = useState('CSE-A');
-  const [selectedYear, setSelectedYear] = useState('1st Year'); // Added year state
+  const [selectedYear, setSelectedYear] = useState('1st Year'); 
   const [timetable, setTimetable] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -15,7 +15,7 @@ const TimetableManager = () => {
       setLoading(true);
       try {
         const response = await axios.get(
-          `http://localhost:5000/timetable/${selectedDept}/${selectedClass}/${selectedYear}` // Include year in API request
+          `http://localhost:5000/timetable/${selectedDept}/${selectedClass}/${selectedYear}`
         );
         setTimetable(response.data);
       } catch (err) {
@@ -25,32 +25,33 @@ const TimetableManager = () => {
     };
 
     fetchTimetable();
-  }, [selectedDept, selectedClass, selectedYear]); // Added year to the dependency array
+  }, [selectedDept, selectedClass, selectedYear]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-black p-6 text-white">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-200 via-teal-200 to-yellow-100 p-6 text-gray-900">
       <div className="max-w-5xl mx-auto">
-        <h1 className="text-5xl font-extrabold mb-10 text-center bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500">
-          Timetable
-        </h1>
+      <h1 className="text-5xl sm:text-5xl font-extrabold mb-10 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-800 via-blue-600 to-blue-900">
+  Time table
+</h1>
 
-        <div className="bg-white bg-opacity-10 p-6 rounded-2xl shadow-2xl backdrop-blur-md mb-6">
+
+        <div className="bg-white bg-opacity-80 p-6 rounded-2xl shadow-2xl backdrop-blur-md mb-6">
           <TimetableForm
             selectedDept={selectedDept}
             selectedClass={selectedClass}
-            selectedYear={selectedYear} // Pass selectedYear to TimetableForm
+            selectedYear={selectedYear} 
             setSelectedDept={setSelectedDept}
             setSelectedClass={setSelectedClass}
-            setSelectedYear={setSelectedYear} // Pass setSelectedYear to TimetableForm
+            setSelectedYear={setSelectedYear}
           />
         </div>
 
         {loading ? (
           <div className="flex justify-center mt-10">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-purple-500"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-indigo-500"></div>
           </div>
         ) : timetable ? (
-          <div className="bg-white bg-opacity-10 p-6 rounded-2xl shadow-xl backdrop-blur-md">
+          <div className="bg-white bg-opacity-80 p-6 rounded-2xl shadow-xl backdrop-blur-md">
             <TimetableTable timetable={timetable} />
           </div>
         ) : (

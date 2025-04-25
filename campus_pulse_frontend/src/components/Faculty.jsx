@@ -9,7 +9,8 @@ import {
   FaBookOpen,
   FaCalendarAlt
 } from "react-icons/fa";
-import PostAnnouncementModal from "./PostAnnouncementModal"; // ✅ Import modal
+import PostAnnouncementModal from "./PostAnnouncementModal";
+import CameraForm from "./CameraForm"; // 📸 Import your CameraForm
 
 const facultyOptions = [
   {
@@ -42,16 +43,25 @@ const facultyOptions = [
     icon: FaBookOpen,
     description: "Upload PDFs, slides, and notes for your students.",
     bg: "from-pink-500 to-pink-600"
+  },
+  {
+    title: "Take Photo & Fill Details",
+    icon: FaUsers,
+    description: "Capture photo and submit academic data.",
+    bg: "from-red-500 to-red-600"
   }
 ];
 
 const Faculty = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCameraFormOpen, setIsCameraFormOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleCardClick = (title, link) => {
     if (title === "Post Announcement") {
       setIsModalOpen(true);
+    } else if (title === "Take Photo & Fill Details") {
+      setIsCameraFormOpen(true);
     } else if (link) {
       navigate(link);
     }
@@ -117,8 +127,13 @@ const Faculty = () => {
         </div>
       </motion.div>
 
-      {/* ✅ Modal Component */}
+      {/* 📢 Post Announcement Modal */}
       <PostAnnouncementModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+
+      {/* 📸 Camera Form Modal */}
+      {isCameraFormOpen && (
+        <CameraForm onClose={() => setIsCameraFormOpen(false)} />
+      )}
     </div>
   );
 };

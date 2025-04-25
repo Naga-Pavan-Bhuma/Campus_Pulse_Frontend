@@ -42,12 +42,14 @@ const MainLayout = () => {
   const handleNotificationClick = async () => {
     try {
       const res = await axios.get("http://localhost:5000/announcements");
-      setAnnouncements(res.data); // <-- Save actual announcements
-      setShowPopup(true); // Show the popup
+      setAnnouncements(res.data);
+      setShowPopup(true);
+      setAnnouncementCount(0); // ✅ Reset the count after showing
     } catch (err) {
       console.error("Error fetching announcements:", err);
     }
   };
+  
 
   const renderSidebar = () => {
     if (location.pathname.startsWith("/faculty")) return <FacultySidebar />;

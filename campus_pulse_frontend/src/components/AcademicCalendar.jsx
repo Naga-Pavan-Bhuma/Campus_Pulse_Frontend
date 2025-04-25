@@ -30,12 +30,12 @@ const AcademicCalendar = () => {
   };
 
   const renderHeader = () => (
-    <div className="flex justify-between items-center text-2xl font-bold text-cyan-300 mb-4">
-      <button onClick={() => setCurrentMonth(subMonths(currentMonth, 1))} className="text-pink-400 hover:text-pink-500 transition-all duration-300">
+    <div className="flex justify-between items-center text-2xl font-bold text-indigo-700 mb-4">
+      <button onClick={() => setCurrentMonth(subMonths(currentMonth, 1))} className="text-blue-500 hover:text-blue-600 transition-all duration-300">
         &lt;
       </button>
       <span>{format(currentMonth, 'MMMM yyyy')}</span>
-      <button onClick={() => setCurrentMonth(addMonths(currentMonth, 1))} className="text-pink-400 hover:text-pink-500 transition-all duration-300">
+      <button onClick={() => setCurrentMonth(addMonths(currentMonth, 1))} className="text-blue-500 hover:text-blue-600 transition-all duration-300">
         &gt;
       </button>
     </div>
@@ -44,7 +44,7 @@ const AcademicCalendar = () => {
   const renderDays = () => {
     const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     return (
-      <div className="grid grid-cols-7 text-sm text-center text-blue-200 mb-2 font-semibold tracking-wide">
+      <div className="grid grid-cols-7 text-sm text-center text-gray-700 mb-2 font-semibold tracking-wide">
         {days.map((day, idx) => (
           <div key={idx}>{day}</div>
         ))}
@@ -69,12 +69,12 @@ const AcademicCalendar = () => {
         const isSunday = day.getDay() === 0;
 
         days.push(
-          <div key={day} className="p-2 sm:p-4 border border-blue-700 min-h-[90px] relative hover:bg-cyan-800 hover:bg-opacity-20 transition-all duration-300 group rounded-md">
-            <span className="text-sm font-bold text-green-300">{format(day, 'd')}</span>
+          <div key={day} className="p-2 sm:p-4 border border-gray-400 min-h-[90px] relative hover:bg-blue-100 hover:bg-opacity-20 transition-all duration-300 group rounded-md">
+            <span className="text-sm font-bold text-blue-600">{format(day, 'd')}</span>
 
             {/* Sunday Holiday */}
             {isSunday && (
-              <div className="text-xs mt-1 px-2 py-1 rounded bg-purple-600 text-white w-fit shadow-sm">
+              <div className="text-xs mt-1 px-2 py-1 rounded bg-red-500 text-white w-fit shadow-sm">
                 Holiday
               </div>
             )}
@@ -82,7 +82,7 @@ const AcademicCalendar = () => {
             {/* Events */}
             {dayEvents.map((event, idx) => (
               <div key={idx} className="relative group text-xs mt-1 w-full max-w-full">
-                <div className={`px-2 py-1 rounded shadow-md truncate ${event.type === 'exam' ? 'bg-red-600' : 'bg-green-600'} text-white`}>
+                <div className={`px-2 py-1 rounded shadow-md truncate ${event.type === 'exam' ? 'bg-red-500' : 'bg-green-500'} text-white`}>
                   {event.title.length > 10 ? event.title.slice(0, 10) + '…' : event.title}
                 </div>
                 <div className="absolute z-20 bottom-full mb-1 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-90 text-white text-xs p-2 rounded shadow-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200 w-max max-w-xs text-center pointer-events-none">
@@ -103,17 +103,20 @@ const AcademicCalendar = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-indigo-900 to-black p-8 text-white">
+    <div className="min-h-screen bg-gradient-to-br from-white via-gray-100 to-gray-200 p-8 text-black">
       <div className="max-w-6xl mx-auto">
-        <h1 className="text-5xl sm:text-6xl font-extrabold mb-10 text-center bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-pink-500 to-purple-500">
-          Academic Calendar 
-        </h1>
+      <h1 className="text-5xl sm:text-6xl font-extrabold mb-10 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-800 via-blue-600 to-blue-900">
+  Academic Calendar
+</h1>
+
+
+
 
         {/* Form Section */}
-        <form onSubmit={handleSubmit} className="bg-white bg-opacity-5 p-6 rounded-2xl shadow-2xl backdrop-blur-lg mb-8">
+        <form onSubmit={handleSubmit} className="bg-white bg-opacity-80 p-6 rounded-2xl shadow-lg backdrop-blur-lg mb-8">
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
             <div className="w-full sm:w-48">
-              <label className="block text-sm font-semibold text-blue-200 mb-1">Branch</label>
+              <label className="block text-sm font-semibold text-gray-600 mb-1">Branch</label>
               <select value={branch} onChange={(e) => setBranch(e.target.value)} className="w-full p-3 rounded-lg text-white focus:ring-2 focus:ring-cyan-400">
                 <option value="CSE">CSE</option>
                 <option value="ECE">ECE</option>
@@ -126,7 +129,7 @@ const AcademicCalendar = () => {
             </div>
 
             <div className="w-full sm:w-48">
-              <label className="block text-sm font-semibold text-blue-200 mb-1">Year</label>
+              <label className="block text-sm font-semibold text-gray-600 mb-1">Year</label>
               <select value={year} onChange={(e) => setYear(parseInt(e.target.value))} className="w-full p-3 rounded-lg text-white focus:ring-2 focus:ring-cyan-400">
                 {[1, 2, 3, 4].map((yr) => (
                   <option key={yr} value={yr}>{yr} Year</option>
@@ -134,7 +137,7 @@ const AcademicCalendar = () => {
               </select>
             </div>
 
-            <button type="submit" className="bg-cyan-400 hover:bg-cyan-500 text-black font-bold py-3 px-6 rounded-lg shadow-lg transition-all duration-300">
+            <button type="submit" className="bg-blue-800 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition-all duration-300">
               {loading ? "Loading..." : "Show Calendar"}
             </button>
           </div>
@@ -142,7 +145,7 @@ const AcademicCalendar = () => {
 
         {/* Calendar View */}
         {showCalendar && (
-          <div className="bg-white bg-opacity-5 p-6 rounded-2xl shadow-xl backdrop-blur-md">
+          <div className="bg-white bg-opacity-90 p-6 rounded-2xl shadow-xl backdrop-blur-md">
             {renderHeader()}
             {renderDays()}
             {renderCells()}
@@ -151,7 +154,7 @@ const AcademicCalendar = () => {
 
         {/* No Events Message */}
         {showCalendar && events.length === 0 && !loading && (
-          <div className="text-center text-pink-400 mt-6 font-semibold">No events found for this selection.</div>
+          <div className="text-center text-red-500 mt-6 font-semibold">No events found for this selection.</div>
         )}
       </div>
     </div>

@@ -12,22 +12,32 @@ const TimetableTable = ({ timetable }) => {
   ];
 
   return (
-    <div className="overflow-x-auto mt-8 bg-gradient-to-r from-purple-500 via-pink-500 to-purple-600 p-8 rounded-xl shadow-lg">
+    <div className="overflow-x-auto mt-8 bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 p-8 rounded-xl shadow-lg">
       <table className="min-w-full table-auto text-white">
         <thead>
-          <tr>
-            <th className="px-6 py-3 text-center text-lg font-bold uppercase">Day</th>
+          <tr className="bg-blue-800">
+            <th className="px-6 py-3 text-center text-lg font-bold uppercase border-b-2 border-white">Day</th>
             {timeSlots.map((slot, index) => (
-              <th key={index} className="px-6 py-3 text-center text-lg font-bold uppercase">{slot}</th>
+              <th key={index} className="px-6 py-3 text-center text-lg font-bold uppercase border-b-2 border-white">
+                {slot}
+              </th>
             ))}
           </tr>
         </thead>
         <tbody>
           {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].map((day, index) => (
-            <tr key={index} className="hover:bg-purple-700 hover:scale-105 transition-transform duration-300 ease-in-out">
-              <td className="px-6 py-3 text-center font-semibold">{day}</td>
+            <tr 
+              key={index} 
+              className={`${
+                index % 2 === 0 ? 'bg-blue-700' : 'bg-blue-600'
+              } hover:bg-blue-500 hover:scale-105 transition-transform duration-300 ease-in-out`}
+            >
+              <td className="px-6 py-3 text-center font-semibold border-b border-blue-400">{day}</td>
               {timeSlots.map((_, idx) => (
-                <td key={idx} className="px-6 py-3 text-center">
+                <td 
+                  key={idx} 
+                  className="px-6 py-3 text-center border-b border-blue-400"
+                >
                   {timetable[day]?.[idx] || 'No Class'}
                 </td>
               ))}
