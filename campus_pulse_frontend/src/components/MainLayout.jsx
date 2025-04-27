@@ -10,17 +10,27 @@ const MainLayout = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [userName, setUserName] = useState("");
   const [announcementCount, setAnnouncementCount] = useState(0);
-  const [announcements, setAnnouncements] = useState([]); // <-- NEW STATE
+  const [announcements, setAnnouncements] = useState([]);
   const location = useLocation();
 
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
+        // Fetch user details based on the current path
         const res = await axios.get("http://localhost:5000/me", {
           withCredentials: true,
         });
-        setUserName(`${res.data.user.firstName} ${res.data.user.lastName}`);
-      } catch (err) {
+
+        // Check if the user is a faculty or student and set the userName accordingly
+        if (location.pathname.startsWith("/faculty")) {
+          setUserName(res.data.user.name); // Faculty user has `name`
+        } else if (location.pathname.startsWith("/student")) {
+          setUserName(`${res.data.user.firstName} ${res.data.user.lastName}`); // Student user has `firstName` and `lastName`
+        } else if (location.pathname.startsWith("/admin")) {
+          setUserName("Admin")
+        }
+      }
+       catch (err) {
         console.error("Error fetching user details:", err);
       }
     };
@@ -28,29 +38,29 @@ const MainLayout = () => {
     const fetchAnnouncementCount = async () => {
       try {
         const res = await axios.get("http://localhost:5000/announcements");
-        setAnnouncementCount(res.data.length);
+        setAnnouncementCount(res.data.length); // Set the number of announcements
       } catch (err) {
         console.error("Error fetching announcements:", err);
       }
     };
 
-    fetchUserDetails();
-    fetchAnnouncementCount();
-  }, [location.pathname]);
+    fetchUserDetails(); // Fetch user details
+    fetchAnnouncementCount(); // Fetch the count of announcements
+  }, [location.pathname]); // Run whenever the location changes
 
-  // ✅ Fetch announcements when notification is clicked
+  // Fetch announcements when notification is clicked
   const handleNotificationClick = async () => {
     try {
       const res = await axios.get("http://localhost:5000/announcements");
       setAnnouncements(res.data);
       setShowPopup(true);
-      setAnnouncementCount(0); // ✅ Reset the count after showing
+      setAnnouncementCount(0); // Reset the announcement count after showing
     } catch (err) {
       console.error("Error fetching announcements:", err);
     }
   };
-  
 
+  // Render sidebar based on the current path
   const renderSidebar = () => {
     if (location.pathname.startsWith("/faculty")) return <FacultySidebar />;
     if (location.pathname.startsWith("/student")) return <StudentSidebar />;
@@ -71,7 +81,7 @@ const MainLayout = () => {
         </div>
       </div>
 
-      {/* ✅ Pass announcements to the popup */}
+      {/* Pass announcements to the popup */}
       {showPopup && (
         <AnnouncementPopup
           announcements={announcements}

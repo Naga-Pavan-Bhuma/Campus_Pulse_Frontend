@@ -27,7 +27,7 @@ const CameraForm = ({ onClose }) => {
         const file = new File([blob], "capturedImage.jpg", { type: "image/jpeg" });
         formData.append("image", file);  
         
-      const response = await axios.post("http://192.168.183.213:8000/details", formData, {
+      const response = await axios.post("http://192.168.248.213:8000/details", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
