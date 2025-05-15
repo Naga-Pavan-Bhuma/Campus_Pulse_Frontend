@@ -10,8 +10,9 @@ export default function EventsSection() {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await fetch("http://localhost:5000/events"); // Make sure this matches your backend route
-        const data = await response.json();
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/events`, {
+          credentials: 'include', 
+        });        const data = await response.json();
         setEvents(data);
         console.log("Fetched events:", data); // Debugging line to check fetched data
       } catch (error) {
