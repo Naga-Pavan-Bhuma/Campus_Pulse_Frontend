@@ -51,7 +51,7 @@ const StudentDashboard = () => {
   useEffect(() => {
     const fetchAnnouncements = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/announcements");
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/announcements`);
         setAnnouncements(response.data);
 
         // Check if the popup has been shown already using sessionStorage

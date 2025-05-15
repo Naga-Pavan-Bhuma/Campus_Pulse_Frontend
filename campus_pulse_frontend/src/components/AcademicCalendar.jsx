@@ -16,7 +16,9 @@ const AcademicCalendar = () => {
     setEvents([]);
 
     try {
-      const response = await fetch(`http://localhost:5000/academicCalendar/${branch}/${year}`);
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/academicCalendar/${branch}/${year}`, {
+        credentials: 'include',
+      });
       if (!response.ok) throw new Error('Failed to fetch events');
       const data = await response.json();
 

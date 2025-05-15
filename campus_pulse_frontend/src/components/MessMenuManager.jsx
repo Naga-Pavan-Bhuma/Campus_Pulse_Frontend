@@ -14,7 +14,7 @@ const MessMenuManager = () => {
 
   const fetchMenus = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/menu");
+      const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/menu`);
       const data = res.data || {};
       setMesses(data);
       if (data[selectedMess]) {
@@ -52,9 +52,9 @@ const MessMenuManager = () => {
     setMesses(updatedMesses);
 
     try {
-      await axios.put("http://localhost:5000/menu", updatedMesses);
+      await axios.put(`${process.env.REACT_APP_BACKEND_URL}/menu`, updatedMesses);
 
-      const res = await axios.get("http://localhost:5000/menu");
+      const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/menu`);
       setMesses(res.data || {});
       setMenuData(res.data[selectedMess] || {});
 

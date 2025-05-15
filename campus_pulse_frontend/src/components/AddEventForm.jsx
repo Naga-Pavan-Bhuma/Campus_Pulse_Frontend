@@ -12,7 +12,7 @@ const AddEventForm = () => {
     setLoading(true);
     try {
       const { title, date, type, branch, year } = data;
-      await axios.post('http://localhost:5000/academicCalendar', {
+      await axios.post(`${process.env.REACT_APP_BACKEND_URL}/academicCalendar`, {
         title,
         date,
         type,

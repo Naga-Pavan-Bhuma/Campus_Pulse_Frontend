@@ -12,7 +12,7 @@ const StatsCards = () => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/stats", { withCredentials: true });
+        const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/stats`, { withCredentials: true });
         setStatsData(res.data);
       } catch (error) {
         console.error("Error fetching stats:", error);

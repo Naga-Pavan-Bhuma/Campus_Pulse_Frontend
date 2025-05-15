@@ -20,7 +20,7 @@ const TimetableEditor = () => {
     if (!department || !classSection || !year) return;
     setLoading(true);
     try {
-      const res = await axios.get('http://localhost:5000/faculty-timetable', {
+      const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/faculty-timetable`, {
         params: {
           department,
           year,
@@ -46,7 +46,7 @@ const TimetableEditor = () => {
 
   const handleSave = async () => {
     try {
-      await axios.post('http://localhost:5000/faculty-timetable/update', {
+      await axios.post(`${process.env.REACT_APP_BACKEND_URL}/faculty-timetable/update`, {
         department,
         year,
         className: classFull, // Send the concatenated className

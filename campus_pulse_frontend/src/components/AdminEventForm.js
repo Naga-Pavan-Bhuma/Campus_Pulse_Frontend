@@ -8,7 +8,9 @@ export default function AdminEventManager() {
 
   const fetchEvents = async () => {
     try {
-      const res = await fetch('http://localhost:5000/events');
+      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/events`, {
+        credentials: 'include',
+      });
       const data = await res.json();
       setEvents(data);
     } catch (err) {
@@ -27,8 +29,9 @@ export default function AdminEventManager() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const url = editingId
-      ? `http://localhost:5000/events/${editingId}`
-      : 'http://localhost:5000/events';
+  ? `${process.env.REACT_APP_BACKEND_URL}/events/${editingId}`
+  : `${process.env.REACT_APP_BACKEND_URL}/events`;
+
     const method = editingId ? 'PUT' : 'POST';
 
     try {
@@ -50,7 +53,7 @@ export default function AdminEventManager() {
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to delete this event?')) return;
     try {
-      await fetch(`http://localhost:5000/events/${id}`, { method: 'DELETE' });
+      await fetch(`${process.env.REACT_APP_BACKEND_URL}/events/${id}`, { method: 'DELETE' });
       setMessage('Event deleted');
       fetchEvents();
     } catch (err) {

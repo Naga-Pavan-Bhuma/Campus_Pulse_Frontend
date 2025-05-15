@@ -14,7 +14,7 @@ export default function AdminExamSchedule() {
 
   useEffect(() => {
     if (branch && year && examType) {
-      const apiUrl = `http://localhost:5000/schedule?branch=${branch}&year=${year}&examType=${examType}`;
+      const apiUrl = `${process.env.REACT_APP_BACKEND_URL}/schedule?branch=${branch}&year=${year}&examType=${examType}`;
       axios
         .get(apiUrl)
         .then((response) => {
@@ -57,7 +57,7 @@ export default function AdminExamSchedule() {
 
     setLoading(true);
     try {
-      const response = await axios.post("http://localhost:5000/schedule", {
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/schedule`, {
         branch,
         year,
         examType,

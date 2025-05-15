@@ -15,7 +15,7 @@ const TimetableManager = () => {
       setLoading(true);
       try {
         const response = await axios.get(
-          `http://localhost:5000/timetable/${selectedDept}/${selectedClass}/${selectedYear}`
+`${process.env.REACT_APP_BACKEND_URL}/timetable/${selectedDept}/${selectedClass}/${selectedYear}`
         );
         setTimetable(response.data);
       } catch (err) {

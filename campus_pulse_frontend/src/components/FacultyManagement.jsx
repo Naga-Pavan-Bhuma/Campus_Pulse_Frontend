@@ -6,7 +6,7 @@ const FacultyManagement = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/faculties") // use your actual API route
+    axios.get(`${process.env.REACT_APP_BACKEND_URL}/faculties`) // use your actual API route
       .then((res) => {
         setFaculty(res.data);
         setLoading(false);

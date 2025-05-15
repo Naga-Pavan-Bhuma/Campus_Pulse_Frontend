@@ -20,7 +20,7 @@ export default function ExamSchedule() {
   useEffect(() => {
     if (branch && year && examType) {
       // Replace with your actual backend API URL
-      const apiUrl = `http://localhost:5000/schedule?branch=${branch}&year=${year}&examType=${examType}`;
+      const apiUrl = `${process.env.REACT_APP_BACKEND_URL}/schedule?branch=${branch}&year=${year}&examType=${examType}`;
 
       // Fetch the exam data
       axios.get(apiUrl)

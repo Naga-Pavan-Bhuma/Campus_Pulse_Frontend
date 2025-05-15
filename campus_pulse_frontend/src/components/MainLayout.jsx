@@ -17,7 +17,7 @@ const MainLayout = () => {
     const fetchUserDetails = async () => {
       try {
         // Fetch user details based on the current path
-        const res = await axios.get("http://localhost:5000/me", {
+        const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/me`, {
           withCredentials: true,
         });
 
@@ -37,7 +37,7 @@ const MainLayout = () => {
 
     const fetchAnnouncementCount = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/announcements");
+        const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/announcements`);
         setAnnouncementCount(res.data.length); // Set the number of announcements
       } catch (err) {
         console.error("Error fetching announcements:", err);
@@ -51,7 +51,7 @@ const MainLayout = () => {
   // Fetch announcements when notification is clicked
   const handleNotificationClick = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/announcements");
+      const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/announcements`);
       setAnnouncements(res.data);
       setShowPopup(true);
       setAnnouncementCount(0); // Reset the announcement count after showing

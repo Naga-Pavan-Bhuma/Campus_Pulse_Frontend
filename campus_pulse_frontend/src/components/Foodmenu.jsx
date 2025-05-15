@@ -29,7 +29,7 @@ const Foodmenu = () => {
   useEffect(() => {
     const fetchMessData = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/menu");
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/menu`);
         setMessData(response.data);
         setLoading(false);
       } catch (error) {

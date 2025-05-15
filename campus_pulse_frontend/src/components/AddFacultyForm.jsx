@@ -19,7 +19,11 @@ const AddFacultyForm = () => {
     console.log("Submitting faculty:", faculty); 
   
     try {
-      await axios.post("http://localhost:5000/faculties", faculty);
+      await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/faculties`,
+        faculty,
+        { withCredentials: true } 
+      );
       setMessage("Faculty added successfully!");
       setFaculty({ name: "", facultyId: "" });
     } catch (error) {
