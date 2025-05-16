@@ -1,16 +1,15 @@
-import { Home, Users, MessageCircle, Briefcase, Calendar, LogOut } from "lucide-react";
+import { Home, Users, Calendar, LogOut } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { FaUtensils } from "react-icons/fa";
 import axios from "axios";
-const StudentSidebar = () => {
+
+const StudentSidebar = ({ className = "", onClose }) => {
   const navigate = useNavigate();
   const API_URL = process.env.REACT_APP_BACKEND_URL;
+
   const handleLogout = async () => {
     try {
-      // Make a request to the backend to logout the user (clear cookies on server-side)
       await axios.get(`${API_URL}/logout`, { withCredentials: true });
-  
-      // Redirect to the login page
       navigate("/login");
     } catch (err) {
       console.error("Error logging out:", err);
@@ -18,7 +17,19 @@ const StudentSidebar = () => {
   };
 
   return (
-    <aside className="w-64 h-screen bg-gray-100 border-r border-gray-300 p-5 flex flex-col justify-between shadow-md">
+    <aside
+      className={`w-64 h-screen bg-gray-100 border-r border-gray-300 p-5 flex flex-col justify-between shadow-md
+        ${className}`}
+    >
+      {/* Close button visible only on mobile */}
+      <button
+        onClick={onClose}
+        className="sm:hidden mb-4 p-2 bg-gray-300 rounded hover:bg-gray-400 self-end"
+        aria-label="Close sidebar"
+      >
+        Close
+      </button>
+
       {/* Logo Section */}
       <div className="mb-8">
         <h2 className="text-2xl font-bold text-gray-800 tracking-wide">Campus Pulse</h2>

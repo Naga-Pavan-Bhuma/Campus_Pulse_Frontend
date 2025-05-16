@@ -1,8 +1,8 @@
-import { Home, Users, MessageCircle, Briefcase, Calendar, LogOut } from "lucide-react";
+import { Home, Calendar, LogOut } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { FaUtensils } from "react-icons/fa";
 
-const FacultySidebar = () => {
+const FacultySidebar = ({ className = "", onClose }) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -11,7 +11,19 @@ const FacultySidebar = () => {
   };
 
   return (
-    <aside className="w-64 h-screen bg-gray-100 border-r border-gray-300 p-5 flex flex-col justify-between shadow-md">
+    <aside
+      className={`w-64 h-screen bg-gray-100 border-r border-gray-300 p-5 flex flex-col justify-between shadow-md
+      ${className}`}
+    >
+      {/* Close button visible only on mobile */}
+      <button
+        onClick={onClose}
+        className="sm:hidden mb-4 p-2 bg-gray-300 rounded hover:bg-gray-400 self-end"
+        aria-label="Close sidebar"
+      >
+        Close
+      </button>
+
       {/* Logo Section */}
       <div className="mb-8">
         <h2 className="text-2xl font-bold text-gray-800 tracking-wide">CampuSphere</h2>
@@ -24,7 +36,6 @@ const FacultySidebar = () => {
         <NavItem to="foodmenu" icon={<FaUtensils size={22} />} label="Food Menu" />
         <NavItem to="calendar" icon={<Calendar size={22} />} label="View Calendar" />
         <NavItem to="edit-timetable" icon={<Calendar size={22} />} label="Edit Timetable" />
-        
       </nav>
 
       {/* Logout Button */}

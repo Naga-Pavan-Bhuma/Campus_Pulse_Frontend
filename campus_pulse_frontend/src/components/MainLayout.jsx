@@ -4,33 +4,31 @@ import StudentSidebar from "./StudentSidebar";
 import FacultySidebar from "./FacultySidebar";
 import Navbar from "./Navbar";
 import axios from "axios";
-import AnnouncementPopup from "./AnnouncemetPopup";
+import AnnouncementPopup from "./AnnouncementPopup";
 
 const MainLayout = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [userName, setUserName] = useState("");
   const [announcementCount, setAnnouncementCount] = useState(0);
   const [announcements, setAnnouncements] = useState([]);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
-        // Fetch user details based on the current path
         const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/me`, {
           withCredentials: true,
         });
 
-        // Check if the user is a faculty or student and set the userName accordingly
         if (location.pathname.startsWith("/faculty")) {
-          setUserName(res.data.user.name); // Faculty user has `name`
+          setUserName(res.data.user.name);
         } else if (location.pathname.startsWith("/student")) {
-          setUserName(`${res.data.user.firstName} ${res.data.user.lastName}`); // Student user has `firstName` and `lastName`
+          setUserName(`${res.data.user.firstName} ${res.data.user.lastName}`);
         } else if (location.pathname.startsWith("/admin")) {
-          setUserName("Admin")
+          setUserName("Admin");
         }
-      }
-       catch (err) {
+      } catch (err) {
         console.error("Error fetching user details:", err);
       }
     };
@@ -38,32 +36,43 @@ const MainLayout = () => {
     const fetchAnnouncementCount = async () => {
       try {
         const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/announcements`);
-        setAnnouncementCount(res.data.length); // Set the number of announcements
+        setAnnouncementCount(res.data.length);
       } catch (err) {
         console.error("Error fetching announcements:", err);
       }
     };
 
-    fetchUserDetails(); // Fetch user details
-    fetchAnnouncementCount(); // Fetch the count of announcements
-  }, [location.pathname]); // Run whenever the location changes
+    fetchUserDetails();
+    fetchAnnouncementCount();
+  }, [location.pathname]);
 
-  // Fetch announcements when notification is clicked
   const handleNotificationClick = async () => {
     try {
       const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/announcements`);
       setAnnouncements(res.data);
       setShowPopup(true);
-      setAnnouncementCount(0); // Reset the announcement count after showing
+      setAnnouncementCount(0);
     } catch (err) {
       console.error("Error fetching announcements:", err);
     }
   };
 
-  // Render sidebar based on the current path
+  const toggleSidebar = () => setSidebarOpen((prev) => !prev);
+
   const renderSidebar = () => {
-    if (location.pathname.startsWith("/faculty")) return <FacultySidebar />;
-    if (location.pathname.startsWith("/student")) return <StudentSidebar />;
+    const baseClass = `fixed inset-y-0 left-0 w-64 bg-white shadow-md z-50 transform transition-transform duration-300 ease-in-out
+      ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} sm:translate-x-0 sm:relative`;
+
+    if (location.pathname.startsWith("/faculty"))
+      return <FacultySidebar className={baseClass} onClose={() => setSidebarOpen(false)} />;
+
+    if (location.pathname.startsWith("/student"))
+      return <StudentSidebar className={baseClass} onClose={() => setSidebarOpen(false)} />;
+
+    // Uncomment if you have AdminSidebar implemented
+    // if (location.pathname.startsWith("/admin"))
+    //   return <AdminSidebar className={baseClass} onClose={() => setSidebarOpen(false)} />;
+
     return null;
   };
 
@@ -75,13 +84,13 @@ const MainLayout = () => {
           userName={userName}
           announcementCount={announcementCount}
           onNotificationClick={handleNotificationClick}
+          onMenuClick={toggleSidebar}  // Pass toggle for mobile menu
         />
         <div className="p-6 bg-gray-100 h-full overflow-auto">
           <Outlet />
         </div>
       </div>
 
-      {/* Pass announcements to the popup */}
       {showPopup && (
         <AnnouncementPopup
           announcements={announcements}
