@@ -12,7 +12,7 @@ const MainLayout = () => {
   const [userName, setUserName] = useState("");
   const [announcementCount, setAnnouncementCount] = useState(0);
   const [announcements, setAnnouncements] = useState([]);
-  const [sidebarOpen, setSidebarOpen] = useState(false); // New state
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -46,7 +46,7 @@ const MainLayout = () => {
     fetchUserDetails();
     fetchAnnouncementCount();
 
-    // Close sidebar when route changes (optional UX)
+    // Close sidebar when route changes
     setSidebarOpen(false);
   }, [location.pathname]);
 
@@ -61,23 +61,22 @@ const MainLayout = () => {
     }
   };
 
-  // Toggle sidebar open/close
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
   const renderSidebar = () => {
     if (location.pathname.startsWith("/faculty")) return <FacultySidebar />;
     if (location.pathname.startsWith("/student")) return <StudentSidebar />;
-    if (location.pathname.startsWith("/admin")) return <AdminSidebar />; // if you want admin sidebar here
+    if (location.pathname.startsWith("/admin")) return <AdminSidebar />;
     return null;
   };
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen overflow-hidden">
       {/* Sidebar */}
       <div
         className={`
-          fixed z-40 top-0 left-0 h-full w-64 bg-gray-100 border-r border-gray-300 p-5
-          transform transition-transform duration-300
+          fixed inset-y-0 left-0 z-40 w-64 bg-gray-100 border-r border-gray-300 p-5
+          transform transition-transform duration-300 ease-in-out
           ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
           lg:translate-x-0 lg:static lg:block
         `}
@@ -85,17 +84,25 @@ const MainLayout = () => {
         {renderSidebar()}
       </div>
 
-      {/* Main Content */}
-      <div className="flex flex-col flex-grow lg:ml-64">
+      {/* Overlay for mobile when sidebar is open */}
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black opacity-50 z-30 lg:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
+      {/* Main content */}
+      <div className="flex flex-col flex-grow w-full lg:ml-64 overflow-auto">
         <Navbar
           userName={userName}
           announcementCount={announcementCount}
           onNotificationClick={handleNotificationClick}
-          onMenuClick={toggleSidebar} // Pass toggle function to Navbar
+          onMenuClick={toggleSidebar}
         />
-        <div className="p-6 bg-gray-100 h-full overflow-auto">
+        <main className="p-6 bg-gray-100 flex-grow overflow-auto">
           <Outlet />
-        </div>
+        </main>
       </div>
 
       {showPopup && (
