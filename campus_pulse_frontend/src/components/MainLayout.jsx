@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import StudentSidebar from "./StudentSidebar";
 import FacultySidebar from "./FacultySidebar";
+import AdminSidebar from "./AdminSidebar";
 import Navbar from "./Navbar";
 import axios from "axios";
 import AnnouncementPopup from "./AnnouncementPopup";
@@ -70,8 +71,8 @@ const MainLayout = () => {
       return <StudentSidebar className={baseClass} onClose={() => setSidebarOpen(false)} />;
 
     // Uncomment if you have AdminSidebar implemented
-    // if (location.pathname.startsWith("/admin"))
-    //   return <AdminSidebar className={baseClass} onClose={() => setSidebarOpen(false)} />;
+    if (location.pathname.startsWith("/admin"))
+      return <AdminSidebar className={baseClass} onClose={() => setSidebarOpen(false)} />;
 
     return null;
   };
