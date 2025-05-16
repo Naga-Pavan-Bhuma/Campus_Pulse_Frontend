@@ -5,7 +5,6 @@ import {
   FaClipboardList,
   FaCogs,
   FaCalendarAlt,
-  FaBell,
   FaSignOutAlt,
 } from "react-icons/fa";
 
@@ -18,16 +17,13 @@ const sidebarItems = [
   { icon: <FaSignOutAlt />, label: "Logout" },
 ];
 
-const AdminSidebar = ({ setSelectedSection }) => {
+const AdminSidebar = ({ setSelectedSection, className = "", onClose }) => {
   const navigate = useNavigate();
 
   const handleItemClick = (label) => {
     if (label === "Logout") {
-      // Clear session data if needed
       localStorage.removeItem("token");
       sessionStorage.clear();
-
-      // Redirect to login page
       navigate("/login");
     } else {
       setSelectedSection(label);
@@ -35,13 +31,27 @@ const AdminSidebar = ({ setSelectedSection }) => {
   };
 
   return (
-    <div className="w-64 bg-gray-900 text-white p-6">
+    <aside
+      className={`w-64 h-screen bg-gray-900 text-white p-6 flex flex-col shadow-md ${className}`}
+    >
+      {/* Close button for mobile */}
+      <button
+        onClick={onClose}
+        className="sm:hidden mb-4 p-2 bg-gray-700 rounded hover:bg-gray-600 self-end"
+        aria-label="Close sidebar"
+      >
+        Close
+      </button>
+
+      {/* Logo */}
       <h1 className="text-3xl font-bold mb-12 text-center">Campus Pulse Admin</h1>
-      <ul className="space-y-6">
+
+      {/* Sidebar Items */}
+      <ul className="space-y-6 flex-grow">
         {sidebarItems.map((item, index) => (
           <li
             key={index}
-            className="flex items-center space-x-4 hover:bg-gray-700 p-4 rounded-md cursor-pointer"
+            className="flex items-center space-x-4 hover:bg-gray-700 p-4 rounded-md cursor-pointer transition-all"
             onClick={() => handleItemClick(item.label)}
           >
             <span>{item.icon}</span>
@@ -49,7 +59,7 @@ const AdminSidebar = ({ setSelectedSection }) => {
           </li>
         ))}
       </ul>
-    </div>
+    </aside>
   );
 };
 
