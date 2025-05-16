@@ -69,10 +69,17 @@ const MainLayout = () => {
 
     if (location.pathname.startsWith("/student"))
       return <StudentSidebar className={baseClass} onClose={() => setSidebarOpen(false)} />;
-
-    // Uncomment if you have AdminSidebar implemented
+    const [selectedSection, setSelectedSection] = useState("Faculty Management");
+    
     if (location.pathname.startsWith("/admin"))
-      return <AdminSidebar className={baseClass} onClose={() => setSidebarOpen(false)} />;
+return (
+  <AdminSidebar
+    className={baseClass}
+    onClose={() => setSidebarOpen(false)}
+    setSelectedSection={setSelectedSection}
+    activeLabel={selectedSection}
+  />
+);
 
     return null;
   };

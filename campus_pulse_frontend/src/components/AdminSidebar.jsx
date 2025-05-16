@@ -17,7 +17,7 @@ const sidebarItems = [
   { icon: <FaSignOutAlt />, label: "Logout" },
 ];
 
-const AdminSidebar = ({ setSelectedSection, className = "", onClose }) => {
+const AdminSidebar = ({ setSelectedSection, activeLabel, className = "", onClose }) => {
   const navigate = useNavigate();
 
   const handleItemClick = (label) => {
@@ -31,10 +31,8 @@ const AdminSidebar = ({ setSelectedSection, className = "", onClose }) => {
   };
 
   return (
-    <aside
-      className={`w-64 h-screen bg-gray-900 text-white p-6 flex flex-col shadow-md ${className}`}
-    >
-      {/* Close button for mobile */}
+    <aside className={`w-64 h-screen bg-gray-900 text-white p-6 flex flex-col shadow-md ${className}`}>
+      {/* Mobile close button */}
       <button
         onClick={onClose}
         className="sm:hidden mb-4 p-2 bg-gray-700 rounded hover:bg-gray-600 self-end"
@@ -47,17 +45,21 @@ const AdminSidebar = ({ setSelectedSection, className = "", onClose }) => {
       <h1 className="text-3xl font-bold mb-12 text-center">Campus Pulse Admin</h1>
 
       {/* Sidebar Items */}
-      <ul className="space-y-6 flex-grow">
-        {sidebarItems.map((item, index) => (
-          <li
-            key={index}
-            className="flex items-center space-x-4 hover:bg-gray-700 p-4 rounded-md cursor-pointer transition-all"
-            onClick={() => handleItemClick(item.label)}
-          >
-            <span>{item.icon}</span>
-            <span>{item.label}</span>
-          </li>
-        ))}
+      <ul className="space-y-2 flex-grow">
+        {sidebarItems.map((item, index) => {
+          const isActive = item.label === activeLabel;
+          return (
+            <li
+              key={index}
+              className={`flex items-center space-x-4 p-4 rounded-md cursor-pointer transition-all 
+                ${isActive ? "bg-gray-700 font-semibold" : "text-gray-300 hover:bg-gray-800"}`}
+              onClick={() => handleItemClick(item.label)}
+            >
+              <span>{item.icon}</span>
+              <span>{item.label}</span>
+            </li>
+          );
+        })}
       </ul>
     </aside>
   );
