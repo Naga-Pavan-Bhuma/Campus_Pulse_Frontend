@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { FaUserFriends, FaLaptopCode, FaCalendarAlt, FaUtensils, FaClock } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import AnnouncementPopup from "./AnnouncemetPopup";  // Ensure the import path is correct
+import AnnouncementPopup from "./AnnouncementPopup";  // Ensure the import path is correct
 
 const navOptions = [
   {
