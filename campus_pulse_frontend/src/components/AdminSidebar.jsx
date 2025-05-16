@@ -5,7 +5,6 @@ import {
   FaClipboardList,
   FaCogs,
   FaCalendarAlt,
-  FaBell,
   FaSignOutAlt,
 } from "react-icons/fa";
 
@@ -23,11 +22,8 @@ const AdminSidebar = ({ setSelectedSection }) => {
 
   const handleItemClick = (label) => {
     if (label === "Logout") {
-      // Clear session data if needed
       localStorage.removeItem("token");
       sessionStorage.clear();
-
-      // Redirect to login page
       navigate("/login");
     } else {
       setSelectedSection(label);
