@@ -1,12 +1,20 @@
 import { Bell, Menu } from "lucide-react";
 
-const Navbar = ({ userName = "John Doe", announcementCount = 0, onNotificationClick, onMenuClick }) => {
+const Navbar = ({
+  userName = "John Doe",
+  announcementCount = 0,
+  onNotificationClick,
+  onMenuClick,
+}) => {
   return (
     <header className="bg-white shadow-md p-4 flex items-center justify-between px-6">
       <div className="flex items-center gap-4">
-        {/* Mobile menu button */}
-        <button className="md:hidden" onClick={onMenuClick}>
-          <Menu size={24} className="text-gray-700" />
+        {/* Menu Button: only visible on mobile */}
+        <button
+          className="lg:hidden text-gray-700 hover:text-blue-600"
+          onClick={onMenuClick}
+        >
+          <Menu size={24} />
         </button>
 
         <div className="text-xl font-semibold text-blue-700 tracking-wide">
