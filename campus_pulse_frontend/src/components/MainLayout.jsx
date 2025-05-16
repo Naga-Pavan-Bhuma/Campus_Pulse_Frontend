@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import StudentSidebar from "./StudentSidebar";
 import FacultySidebar from "./FacultySidebar";
+import AdminSidebar from "./AdminSidebar";
 import Navbar from "./Navbar";
 import axios from "axios";
 import AnnouncementPopup from "./AnnouncemetPopup";
