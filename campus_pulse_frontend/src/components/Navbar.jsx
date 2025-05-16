@@ -7,29 +7,32 @@ const Navbar = ({
   onMenuClick,
 }) => {
   return (
-    <header className="bg-white shadow-md p-4 flex items-center justify-between px-6">
-      <div className="flex items-center gap-4">
+    <header className="bg-white shadow-md p-4 flex items-center justify-between px-6 h-16 w-full">
+      <div className="flex items-center gap-4 min-w-0">
         {/* Menu Button: only visible on mobile */}
         <button
-          className="lg:hidden text-gray-700 hover:text-blue-600"
+          className="lg:hidden text-gray-700 hover:text-blue-600 cursor-pointer"
           onClick={onMenuClick}
+          aria-label="Toggle menu"
         >
           <Menu size={24} />
         </button>
 
-        <div className="text-xl font-semibold text-blue-700 tracking-wide">
+        <div className="text-xl font-semibold text-blue-700 tracking-wide truncate">
           Campus Pulse
         </div>
       </div>
 
-      <div className="flex items-center gap-6">
-        <div className="text-gray-700 font-medium hidden sm:block">
-          Welcome, <span className="text-blue-600 font-semibold">{userName}</span>
+      <div className="flex items-center gap-6 min-w-0">
+        <div className="text-gray-700 font-medium hidden sm:block truncate">
+          Welcome,{" "}
+          <span className="text-blue-600 font-semibold truncate">{userName}</span>
         </div>
 
         <button
-          className="relative hover:bg-gray-100 p-2 rounded-lg transition"
+          className="relative hover:bg-gray-100 p-2 rounded-lg transition cursor-pointer"
           onClick={onNotificationClick}
+          aria-label="View notifications"
         >
           <Bell size={24} className="text-gray-700" />
           {announcementCount > 0 && (
@@ -39,7 +42,7 @@ const Navbar = ({
           )}
         </button>
 
-        <div className="w-9 h-9 bg-blue-600 text-white flex items-center justify-center rounded-full font-semibold">
+        <div className="w-9 h-9 bg-blue-600 text-white flex items-center justify-center rounded-full font-semibold select-none">
           {userName?.[0]?.toUpperCase() || "P"}
         </div>
       </div>
