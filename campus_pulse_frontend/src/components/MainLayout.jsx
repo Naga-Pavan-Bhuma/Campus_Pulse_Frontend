@@ -13,6 +13,8 @@ const MainLayout = () => {
   const [announcementCount, setAnnouncementCount] = useState(0);
   const [announcements, setAnnouncements] = useState([]);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [selectedSection, setSelectedSection] = useState("Faculty Management");
+
   const location = useLocation();
 
   useEffect(() => {
@@ -69,7 +71,6 @@ const MainLayout = () => {
 
     if (location.pathname.startsWith("/student"))
       return <StudentSidebar className={baseClass} onClose={() => setSidebarOpen(false)} />;
-    const [selectedSection, setSelectedSection] = useState("Faculty Management");
     
     if (location.pathname.startsWith("/admin"))
 return (
