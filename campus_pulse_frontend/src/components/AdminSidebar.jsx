@@ -31,18 +31,18 @@ const AdminSidebar = ({ setSelectedSection, activeLabel, className = "", onClose
   };
 
   return (
-    <aside className={`w-64 h-screen bg-gray-900 text-white p-6 flex flex-col shadow-md ${className}`}>
-      {/* Mobile Close Button */}
+    <aside className={`w-64 h-screen bg-[#1f2937] text-white p-6 flex flex-col shadow-lg ${className}`}>
+      {/* Close Button for Mobile */}
       <button
         onClick={onClose}
-        className="sm:hidden mb-4 p-2 bg-gray-700 rounded hover:bg-gray-600 self-end text-sm"
+        className="sm:hidden mb-4 p-2 bg-[#374151] rounded hover:bg-[#4b5563] self-end text-sm"
         aria-label="Close sidebar"
       >
         ✕
       </button>
 
       {/* Logo */}
-      <h1 className="text-2xl font-bold mb-12 text-center text-white">Campus Pulse Admin</h1>
+      <h1 className="text-2xl font-bold mb-12 text-center">Campus Pulse Admin</h1>
 
       {/* Sidebar Items */}
       <ul className="space-y-2 flex-grow">
@@ -52,11 +52,11 @@ const AdminSidebar = ({ setSelectedSection, activeLabel, className = "", onClose
             <li
               key={index}
               className={`flex items-center space-x-4 p-3 rounded-md cursor-pointer transition-colors duration-200
-                ${isActive ? "bg-gray-700 text-white font-semibold" : "text-gray-400 hover:bg-gray-800 hover:text-white"}`}
+                ${isActive ? "bg-[#374151] font-semibold" : "hover:bg-[#4b5563]"}`}
               onClick={() => handleItemClick(item.label)}
             >
-              <span className="text-lg">{item.icon}</span>
-              <span className="text-sm">{item.label}</span>
+              <span className="text-lg text-white">{item.icon}</span>
+              <span className="text-sm text-white">{item.label}</span>
             </li>
           );
         })}
