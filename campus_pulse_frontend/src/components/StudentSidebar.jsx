@@ -1,15 +1,16 @@
-import { Home, Users, Calendar, LogOut } from "lucide-react";
+import { Home, Users, MessageCircle, Briefcase, Calendar, LogOut } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { FaUtensils } from "react-icons/fa";
 import axios from "axios";
-
 const StudentSidebar = () => {
   const navigate = useNavigate();
   const API_URL = process.env.REACT_APP_BACKEND_URL;
-
   const handleLogout = async () => {
     try {
+      // Make a request to the backend to logout the user (clear cookies on server-side)
       await axios.get(`${API_URL}/logout`, { withCredentials: true });
+  
+      // Redirect to the login page
       navigate("/login");
     } catch (err) {
       console.error("Error logging out:", err);
@@ -18,10 +19,12 @@ const StudentSidebar = () => {
 
   return (
     <aside className="w-64 h-screen bg-gray-100 border-r border-gray-300 p-5 flex flex-col justify-between shadow-md">
+      {/* Logo Section */}
       <div className="mb-8">
         <h2 className="text-2xl font-bold text-gray-800 tracking-wide">Campus Pulse</h2>
       </div>
 
+      {/* Navigation Links */}
       <nav className="flex flex-col gap-4">
         <NavItem to="/student" icon={<Home size={22} />} label="Home" />
         <NavItem to="clubs" icon={<Users size={22} />} label="Clubs" />
@@ -31,6 +34,7 @@ const StudentSidebar = () => {
         <NavItem to="calendar" icon={<Calendar size={22} />} label="Academic Calendar" />
       </nav>
 
+      {/* Logout Button */}
       <div className="mt-auto">
         <button
           onClick={handleLogout}
@@ -44,6 +48,7 @@ const StudentSidebar = () => {
   );
 };
 
+/* Sidebar Item Component */
 const NavItem = ({ to, icon, label }) => {
   return (
     <NavLink

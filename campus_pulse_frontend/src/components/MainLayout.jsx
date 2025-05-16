@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import StudentSidebar from "./StudentSidebar";
 import FacultySidebar from "./FacultySidebar";
-import AdminSidebar from "./AdminSidebar";
 import Navbar from "./Navbar";
 import axios from "axios";
 import AnnouncementPopup from "./AnnouncemetPopup";
@@ -12,24 +11,26 @@ const MainLayout = () => {
   const [userName, setUserName] = useState("");
   const [announcementCount, setAnnouncementCount] = useState(0);
   const [announcements, setAnnouncements] = useState([]);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
+        // Fetch user details based on the current path
         const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/me`, {
           withCredentials: true,
         });
 
+        // Check if the user is a faculty or student and set the userName accordingly
         if (location.pathname.startsWith("/faculty")) {
-          setUserName(res.data.user.name);
+          setUserName(res.data.user.name); // Faculty user has `name`
         } else if (location.pathname.startsWith("/student")) {
-          setUserName(`${res.data.user.firstName} ${res.data.user.lastName}`);
+          setUserName(`${res.data.user.firstName} ${res.data.user.lastName}`); // Student user has `firstName` and `lastName`
         } else if (location.pathname.startsWith("/admin")) {
-          setUserName("Admin");
+          setUserName("Admin")
         }
-      } catch (err) {
+      }
+       catch (err) {
         console.error("Error fetching user details:", err);
       }
     };
@@ -37,67 +38,50 @@ const MainLayout = () => {
     const fetchAnnouncementCount = async () => {
       try {
         const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/announcements`);
-        setAnnouncementCount(res.data.length);
+        setAnnouncementCount(res.data.length); // Set the number of announcements
       } catch (err) {
         console.error("Error fetching announcements:", err);
       }
     };
 
-    fetchUserDetails();
-    fetchAnnouncementCount();
+    fetchUserDetails(); // Fetch user details
+    fetchAnnouncementCount(); // Fetch the count of announcements
+  }, [location.pathname]); // Run whenever the location changes
 
-    // Close sidebar when route changes (good UX)
-    setSidebarOpen(false);
-  }, [location.pathname]);
-
+  // Fetch announcements when notification is clicked
   const handleNotificationClick = async () => {
     try {
       const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/announcements`);
       setAnnouncements(res.data);
       setShowPopup(true);
-      setAnnouncementCount(0);
+      setAnnouncementCount(0); // Reset the announcement count after showing
     } catch (err) {
       console.error("Error fetching announcements:", err);
     }
   };
 
-  const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
-
+  // Render sidebar based on the current path
   const renderSidebar = () => {
     if (location.pathname.startsWith("/faculty")) return <FacultySidebar />;
     if (location.pathname.startsWith("/student")) return <StudentSidebar />;
-    if (location.pathname.startsWith("/admin")) return <AdminSidebar />;
     return null;
   };
 
   return (
-    <div className="flex h-screen overflow-hidden">
-      {/* Sidebar */}
-      <aside
-        className={`
-          fixed top-0 left-0 h-full w-64 bg-gray-100 border-r border-gray-300 p-5
-          transform transition-transform duration-300 ease-in-out
-          ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
-          lg:translate-x-0 lg:static lg:block
-          z-40
-        `}
-      >
-        {renderSidebar()}
-      </aside>
-
-      {/* Main content area */}
-      <div className="flex flex-col flex-grow ml-0 lg:ml-64 w-full overflow-auto">
+    <div className="flex h-screen">
+      {renderSidebar()}
+      <div className="flex flex-col flex-grow">
         <Navbar
           userName={userName}
           announcementCount={announcementCount}
           onNotificationClick={handleNotificationClick}
-          onMenuClick={toggleSidebar}
         />
-        <main className="p-6 bg-gray-100 flex-grow overflow-auto">
+        <div className="p-6 bg-gray-100 h-full overflow-auto">
           <Outlet />
-        </main>
+        </div>
       </div>
 
+      {/* Pass announcements to the popup */}
       {showPopup && (
         <AnnouncementPopup
           announcements={announcements}

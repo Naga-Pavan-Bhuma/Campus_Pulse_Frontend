@@ -1,4 +1,4 @@
-import { Home, Calendar, LogOut } from "lucide-react";
+import { Home, Users, MessageCircle, Briefcase, Calendar, LogOut } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { FaUtensils } from "react-icons/fa";
 
@@ -6,24 +6,28 @@ const FacultySidebar = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    sessionStorage.removeItem("authToken");
-    navigate("/login");
+    sessionStorage.removeItem("authToken"); // Remove stored token
+    navigate("/login"); // Redirect to login page
   };
 
   return (
     <aside className="w-64 h-screen bg-gray-100 border-r border-gray-300 p-5 flex flex-col justify-between shadow-md">
+      {/* Logo Section */}
       <div className="mb-8">
         <h2 className="text-2xl font-bold text-gray-800 tracking-wide">CampuSphere</h2>
       </div>
 
+      {/* Navigation Links */}
       <nav className="flex flex-col gap-4">
         <NavItem to="/faculty" icon={<Home size={22} />} label="Home" />
         <NavItem to="examschedule" icon={<Calendar size={22} />} label="Exam Schedule" />
         <NavItem to="foodmenu" icon={<FaUtensils size={22} />} label="Food Menu" />
         <NavItem to="calendar" icon={<Calendar size={22} />} label="View Calendar" />
         <NavItem to="edit-timetable" icon={<Calendar size={22} />} label="Edit Timetable" />
+        
       </nav>
 
+      {/* Logout Button */}
       <div className="mt-auto">
         <button
           onClick={handleLogout}
@@ -37,6 +41,7 @@ const FacultySidebar = () => {
   );
 };
 
+/* Sidebar Item Component */
 const NavItem = ({ to, icon, label }) => {
   return (
     <NavLink
