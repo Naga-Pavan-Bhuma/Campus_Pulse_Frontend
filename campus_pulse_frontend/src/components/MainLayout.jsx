@@ -46,7 +46,7 @@ const MainLayout = () => {
     fetchUserDetails();
     fetchAnnouncementCount();
 
-    // Close sidebar when route changes (optional UX)
+    // Close sidebar when route changes (good UX)
     setSidebarOpen(false);
   }, [location.pathname]);
 
@@ -71,28 +71,29 @@ const MainLayout = () => {
   };
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen overflow-hidden">
       {/* Sidebar */}
-      <div
+      <aside
         className={`
-          fixed z-40 top-0 left-0 h-full w-64 bg-gray-100 border-r border-gray-300 p-5
-          transform transition-transform duration-300
+          fixed top-0 left-0 h-full w-64 bg-gray-100 border-r border-gray-300 p-5
+          transform transition-transform duration-300 ease-in-out
           ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
           lg:translate-x-0 lg:static lg:block
+          z-40
         `}
       >
         {renderSidebar()}
-      </div>
+      </aside>
 
-      {/* Main Content */}
-      <div className="flex flex-col flex-grow w-full lg:ml-64 overflow-auto">
+      {/* Main content area */}
+      <div className="flex flex-col flex-grow ml-0 lg:ml-64 w-full overflow-auto">
         <Navbar
           userName={userName}
           announcementCount={announcementCount}
           onNotificationClick={handleNotificationClick}
           onMenuClick={toggleSidebar}
         />
-        <main className="pt-6 pr-6 pb-6 pl-4 bg-gray-100 flex-grow overflow-auto">
+        <main className="p-6 bg-gray-100 flex-grow overflow-auto">
           <Outlet />
         </main>
       </div>
