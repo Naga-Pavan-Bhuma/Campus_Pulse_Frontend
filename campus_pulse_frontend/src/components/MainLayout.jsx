@@ -62,25 +62,28 @@ const MainLayout = () => {
 
   const toggleSidebar = () => setSidebarOpen((prev) => !prev);
 
-  const renderSidebar = () => {
-    const baseClass = `fixed inset-y-0 left-0 w-64 bg-white shadow-md z-50 transform transition-transform duration-300 ease-in-out
-      ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} sm:translate-x-0 sm:relative`;
+  const baseClassWhite = `fixed inset-y-0 left-0 w-64 bg-white shadow-md z-50 transform transition-transform duration-300 ease-in-out
+    ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} sm:translate-x-0 sm:relative`;
 
+  const baseClassDark = `fixed inset-y-0 left-0 w-64 bg-gray-900 text-white shadow-md z-50 transform transition-transform duration-300 ease-in-out
+    ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} sm:translate-x-0 sm:relative`;
+
+  const renderSidebar = () => {
     if (location.pathname.startsWith("/faculty"))
-      return <FacultySidebar className={baseClass} onClose={() => setSidebarOpen(false)} />;
+      return <FacultySidebar className={baseClassWhite} onClose={() => setSidebarOpen(false)} />;
 
     if (location.pathname.startsWith("/student"))
-      return <StudentSidebar className={baseClass} onClose={() => setSidebarOpen(false)} />;
-    
+      return <StudentSidebar className={baseClassWhite} onClose={() => setSidebarOpen(false)} />;
+
     if (location.pathname.startsWith("/admin"))
-return (
-  <AdminSidebar
-    className={baseClass}
-    onClose={() => setSidebarOpen(false)}
-    setSelectedSection={setSelectedSection}
-    activeLabel={selectedSection}
-  />
-);
+      return (
+        <AdminSidebar
+          className={baseClassDark}
+          onClose={() => setSidebarOpen(false)}
+          setSelectedSection={setSelectedSection}
+          activeLabel={selectedSection}
+        />
+      );
 
     return null;
   };
@@ -93,7 +96,7 @@ return (
           userName={userName}
           announcementCount={announcementCount}
           onNotificationClick={handleNotificationClick}
-          onMenuClick={toggleSidebar}  // Pass toggle for mobile menu
+          onMenuClick={toggleSidebar} // Pass toggle for mobile menu
         />
         <div className="p-6 bg-gray-100 h-full overflow-auto">
           <Outlet />
@@ -101,10 +104,7 @@ return (
       </div>
 
       {showPopup && (
-        <AnnouncementPopup
-          announcements={announcements}
-          onClose={() => setShowPopup(false)}
-        />
+        <AnnouncementPopup announcements={announcements} onClose={() => setShowPopup(false)} />
       )}
     </div>
   );
