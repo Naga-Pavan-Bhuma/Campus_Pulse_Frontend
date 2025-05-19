@@ -10,6 +10,7 @@ import AnnouncementPopup from "./AnnouncementPopup";
 const MainLayout = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [userName, setUserName] = useState("");
+  const [photoUrl, setPhotoUrl] = useState(""); // NEW
   const [announcementCount, setAnnouncementCount] = useState(0);
   const [announcements, setAnnouncements] = useState([]);
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -24,13 +25,17 @@ const MainLayout = () => {
           withCredentials: true,
         });
 
+        const user = res.data.user;
+
         if (location.pathname.startsWith("/faculty")) {
-          setUserName(res.data.user.name);
+          setUserName(user.name);
         } else if (location.pathname.startsWith("/student")) {
-          setUserName(`${res.data.user.firstName} ${res.data.user.lastName}`);
+          setUserName(`${user.firstName} ${user.lastName}`);
         } else if (location.pathname.startsWith("/admin")) {
           setUserName("Admin");
         }
+
+        setPhotoUrl(user.photoUrl); // SET PHOTO URL
       } catch (err) {
         console.error("Error fetching user details:", err);
       }
@@ -94,9 +99,10 @@ const MainLayout = () => {
       <div className="flex flex-col flex-grow">
         <Navbar
           userName={userName}
+          photoUrl={photoUrl} // ✅ pass photoUrl
           announcementCount={announcementCount}
           onNotificationClick={handleNotificationClick}
-          onMenuClick={toggleSidebar} // Pass toggle for mobile menu
+          onMenuClick={toggleSidebar}
         />
         <div className="p-6 bg-gray-100 h-full overflow-auto">
           <Outlet />

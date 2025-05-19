@@ -7,7 +7,7 @@ import AdminExamSchedule from "./AdminExamSchedule";
 import AdminEventForm from "./AdminEventForm";
 import AddEventForm from "./AddEventForm";
 const Admin = () => {
-  const [selectedSection, setSelectedSection] = useState("User Management");
+  const [selectedSection] = useState("User Management");
 
   return (
     <div className="flex h-screen bg-gray-100">

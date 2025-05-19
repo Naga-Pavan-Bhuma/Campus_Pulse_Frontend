@@ -4,9 +4,9 @@ import { Card, CardContent } from "./Card";
 import { Select, SelectItem } from "./Select";
 import axios from "axios"; // Import axios for API calls
 
-const CLIENT_ID = "938531488618-qt5j75gjqc0h29gaecnuqmif3v43f5m1.apps.googleusercontent.com";
-const API_KEY = "AIzaSyDD6722h6lrebOc-uSuTlonAWPo5HJQVqI";
-const SCOPES = "https://www.googleapis.com/auth/calendar.events";
+// const CLIENT_ID = "938531488618-qt5j75gjqc0h29gaecnuqmif3v43f5m1.apps.googleusercontent.com";
+// const API_KEY = "AIzaSyDD6722h6lrebOc-uSuTlonAWPo5HJQVqI";
+// const SCOPES = "https://www.googleapis.com/auth/calendar.events";
 
 export default function ExamSchedule() {
   const [branch, setBranch] = useState("");
@@ -120,6 +120,7 @@ export default function ExamSchedule() {
       {showCalendar && (
         <div className="mt-6 w-full flex justify-center">
           <iframe
+            title="calendar"
             src="https://calendar.google.com/calendar/embed?src=2a79a6581537d55aba7f0b0c6a3417b74730a7e36055ed90d1ab28011df53489%40group.calendar.google.com&ctz=UTC"
             style={{ border: "0" }}
             width="800"
