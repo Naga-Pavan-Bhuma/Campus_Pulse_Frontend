@@ -1,52 +1,46 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 
 const sections = [
   {
     title: "Our Vision",
     description:
       "Campus Pulse aims to centralize campus activities, from events and food menus to exam schedules. We’re here to modernize campus engagement for both students and faculty.",
-    image:
-      "/c1.gif",
+    animationUrl: "https://lottie.host/a1df9170-786e-4fd6-8fe2-739696efde98/WBpgkfYXE3.lottie",
   },
   {
     title: "Why Campus Pulse?",
     description:
       "Whether it's tracking your timetable, checking today’s mess menu, or following your favorite clubs, Campus Pulse is designed to make your college life easier and smarter.",
-    image:
-      "/c1.gif",
+    animationUrl: "https://lottie.host/744831cf-3993-47af-a23f-a0276647fd62/8CO1mZjXVp.json",
   },
   {
     title: "Made by Students, for Students",
     description:
       "We understand your needs because we are students too. Campus Pulse is built by engineering students who want to create impactful, user-centric tools for academic environments.",
-    image:
-      "/c1.gif",
+    animationUrl: "https://lottie.host/5d694424-dfe9-4916-8673-bac1273d586f/P6h8E92KKI.lottie",
   },
   {
     title: "Seamless Integration",
     description:
       "Campus Pulse integrates all essential campus services into a unified platform, making it your go-to app for everything college-related.",
-    image:
-      "/c1.gif",
+    animationUrl: "https://lottie.host/d3e7d295-75fb-4b2d-818f-f455aae7c024/FvAY0btWRm.lottie",
   },
   {
     title: "User-Centered Design",
     description:
       "Our design philosophy puts you first — simple, intuitive interfaces that empower you to access information effortlessly and stay connected.",
-    image:
-      "/c1.gif",
+    animationUrl: "https://lottie.host/957f4056-ffc7-4dd0-b087-482b331edd6a/qVLEqtyknN.lottie",
   },
   {
     title: "Community & Support",
     description:
       "Campus Pulse fosters a vibrant campus community and offers dedicated support to ensure your experience is smooth and rewarding.",
-    image:
-      "/c1.gif",
+    animationUrl: "https://lottie.host/85a399a7-9513-45c4-b337-63e108deec0b/pKe5qgvwt5.lottie",
   },
 ];
 
-// Animation variants for container staggering children
 const containerVariants = {
   hidden: {},
   visible: {
@@ -90,22 +84,16 @@ const AboutUs = () => {
               index % 2 === 1 ? "md:flex-row-reverse" : ""
             }`}
             variants={fadeInUp}
-            whileHover={{ scale: 1.02 }}
-            transition={{ type: "spring", stiffness: 200 }}
           >
-            {/* Image with subtle hover zoom */}
-            <motion.div
-              className="w-full md:w-1/2 rounded-xl overflow-hidden shadow-2xl cursor-pointer"
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.5 }}
-            >
-              <img
-                src={section.image}
-                alt={section.title}
-                className="w-full h-auto max-h-[450px] object-cover"
-                loading="lazy"
+            {/* Clean Lottie - No Box, Shadow or Hover */}
+            <div className="w-full md:w-1/2">
+              <DotLottieReact
+                src={section.animationUrl}
+                loop
+                autoplay
+                style={{ width: "100%", maxHeight: "400px", background: "transparent" }}
               />
-            </motion.div>
+            </div>
 
             {/* Text content */}
             <div className="w-full md:w-1/2 text-center md:text-left">
@@ -113,7 +101,11 @@ const AboutUs = () => {
                 className="text-3xl font-semibold text-blue-900 mb-6 tracking-tight drop-shadow-sm"
                 initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: index * 0.3 + 0.2, duration: 0.7, ease: "easeOut" }}
+                transition={{
+                  delay: index * 0.3 + 0.2,
+                  duration: 0.7,
+                  ease: "easeOut",
+                }}
               >
                 {section.title}
               </motion.h2>
@@ -130,7 +122,6 @@ const AboutUs = () => {
         ))}
       </motion.div>
 
-      {/* Footer separator */}
       <div className="mt-32 border-t border-blue-200 pt-12 text-center text-blue-700 italic select-none text-sm">
         &copy; {new Date().getFullYear()} Campus Pulse — Empowering Campus Life
       </div>
