@@ -1,4 +1,12 @@
-import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaEnvelope, FaPhoneAlt, FaMapMarkerAlt } from "react-icons/fa";
+import {
+  FaFacebook,
+  FaTwitter,
+  FaInstagram,
+  FaLinkedin,
+  FaEnvelope,
+  FaPhoneAlt,
+  FaMapMarkerAlt,
+} from "react-icons/fa";
 import { motion } from "framer-motion";
 
 export default function Footer() {
@@ -16,7 +24,10 @@ export default function Footer() {
             key={idx}
             className="text-2xl hover:scale-125 hover:text-blue-400 transition-transform cursor-pointer"
             whileHover={{ rotate: 5 }}
-            animate={{ y: [0, -4, 0], transition: { repeat: Infinity, duration: 2, delay: idx * 0.2 } }}
+            animate={{
+              y: [0, -4, 0],
+              transition: { repeat: Infinity, duration: 2, delay: idx * 0.2 },
+            }}
           >
             <Icon />
           </motion.div>
@@ -26,7 +37,7 @@ export default function Footer() {
       {/* Contact Information */}
       <div className="mb-8">
         <p className="text-lg">Get in Touch</p>
-        <div className="flex justify-center gap-8 mt-4">
+        <div className="flex flex-col items-center gap-4 mt-4 md:flex-row md:justify-center md:gap-8">
           <motion.div
             className="flex items-center gap-2 text-gray-400 hover:text-white"
             whileHover={{ scale: 1.1 }}
@@ -59,31 +70,69 @@ export default function Footer() {
         <div>
           <h3 className="text-xl font-semibold mb-4">About</h3>
           <ul>
-            <li><a href="#" className="hover:text-blue-400">Our Story</a></li>
-            <li><a href="#" className="hover:text-blue-400">Mission & Vision</a></li>
-            <li><a href="#" className="hover:text-blue-400">Careers</a></li>
+            <li>
+              <a href="#" className="hover:text-blue-400">
+                Our Story
+              </a>
+            </li>
+            <li>
+              <a href="#" className="hover:text-blue-400">
+                Mission & Vision
+              </a>
+            </li>
+            <li>
+              <a href="#" className="hover:text-blue-400">
+                Careers
+              </a>
+            </li>
           </ul>
         </div>
         <div>
           <h3 className="text-xl font-semibold mb-4">Support</h3>
           <ul>
-            <li><a href="#" className="hover:text-blue-400">Help Center</a></li>
-            <li><a href="#" className="hover:text-blue-400">Privacy Policy</a></li>
-            <li><a href="#" className="hover:text-blue-400">Terms of Service</a></li>
+            <li>
+              <a href="#" className="hover:text-blue-400">
+                Help Center
+              </a>
+            </li>
+            <li>
+              <a href="#" className="hover:text-blue-400">
+                Privacy Policy
+              </a>
+            </li>
+            <li>
+              <a href="#" className="hover:text-blue-400">
+                Terms of Service
+              </a>
+            </li>
           </ul>
         </div>
         <div>
           <h3 className="text-xl font-semibold mb-4">Explore</h3>
           <ul>
-            <li><a href="#" className="hover:text-blue-400">Blog</a></li>
-            <li><a href="#" className="hover:text-blue-400">Events</a></li>
-            <li><a href="#" className="hover:text-blue-400">Community</a></li>
+            <li>
+              <a href="#" className="hover:text-blue-400">
+                Blog
+              </a>
+            </li>
+            <li>
+              <a href="#" className="hover:text-blue-400">
+                Events
+              </a>
+            </li>
+            <li>
+              <a href="#" className="hover:text-blue-400">
+                Community
+              </a>
+            </li>
           </ul>
         </div>
       </div>
 
       <p className="text-sm text-gray-400">
-        &copy; 2025 <span className="text-blue-400 font-semibold">Campus Pulse</span>. All Rights Reserved.
+        &copy; 2025{" "}
+        <span className="text-blue-400 font-semibold">Campus Pulse</span>. All
+        Rights Reserved.
       </p>
     </footer>
   );
