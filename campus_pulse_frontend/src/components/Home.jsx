@@ -1,9 +1,12 @@
+import { useEffect, useState } from "react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { DotLottieReact } from '@lottiefiles/dotlottie-react';
-import { FaCalendarAlt, FaBullhorn, FaClipboardList, FaUserShield } from "react-icons/fa";
-
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import {
+  FaCalendarAlt,
+  FaBullhorn,
+  FaClipboardList,
+  FaUserShield,
   FaUsers,
   FaBell,
   FaRocket,
@@ -17,6 +20,7 @@ import { motion } from "framer-motion";
 import LoginNavbar from "./LoginNavbar";
 import Footer from "./Footer";
 import EventsSection from "./EventsSection";
+
 export default function Home() {
   return (
     <div className="bg-gradient-to-br from-white via-blue-50 to-purple-100 text-gray-900 min-h-screen font-sans overflow-x-hidden">
@@ -36,9 +40,21 @@ export default function Home() {
   );
 }
 
-// 🎠 Carousel Section
+// 🎠 Carousel Section (Responsive Images)
 function CarouselSection() {
-  const slides = ["/c1.gif", "/c2.png", "/c3.png"];
+  const desktopSlides = ["/c1.gif", "/c2.png", "/c3.png"];
+  const mobileSlides = ["/m1.gif", "/m2.png", "/m3.png"];
+
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  const slides = isMobile ? mobileSlides : desktopSlides;
 
   return (
     <div className="relative z-0 mt-2">
@@ -69,6 +85,7 @@ function CarouselSection() {
   );
 }
 
+// 🧩 Features Section
 function FeaturesSection() {
   const features = [
     {
@@ -129,6 +146,7 @@ function FeaturesSection() {
   );
 }
 
+// 🌟 Testimonials Section with Lottie Animation
 function TestimonialsSection() {
   const testimonials = [
     {
@@ -151,8 +169,6 @@ function TestimonialsSection() {
   return (
     <section className="py-24 px-6 bg-gradient-to-br from-blue-50 via-white to-purple-50">
       <div className="max-w-7xl mx-auto flex flex-col items-center gap-10">
-        
-        {/* Testimonials Section */}
         <div className="w-full text-center lg:text-left">
           <motion.h2
             className="text-4xl font-extrabold mb-10 text-gray-900"
@@ -171,25 +187,28 @@ function TestimonialsSection() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ delay: index * 0.2 }}
               >
-                <p className="italic text-gray-700 mb-4 text-lg">“{testimonial.text}”</p>
-                <h3 className="text-lg font-semibold text-gray-900">{testimonial.name}</h3>
+                <p className="italic text-gray-700 mb-4 text-lg">
+                  “{testimonial.text}”
+                </p>
+                <h3 className="text-lg font-semibold text-gray-900">
+                  {testimonial.name}
+                </h3>
                 <p className="text-sm text-gray-500">{testimonial.role}</p>
               </motion.div>
             ))}
           </div>
         </div>
-  
-        {/* Lottie Animation at the Bottom */}
+
+        {/* 🎞 Lottie Animation */}
         <div className="w-full max-w-md">
           <DotLottieReact
             src="https://lottie.host/2f5c6b86-c362-419e-a60c-82d11c57d1d8/KatBHzWIU9.lottie"
             loop
             autoplay
-            style={{ width: '100%', height: 'auto' }}
+            style={{ width: "100%", height: "auto" }}
           />
         </div>
       </div>
     </section>
   );
-    
 }
